@@ -1,0 +1,32 @@
+const primitives = require("@self/schemas/primitives")
+const shared = require("@self/shared")
+
+const typed = {}
+
+-- primitive
+typed.boolean = primitives.boolean
+typed.number = primitives.number
+typed.string = primitives.string
+typed.table = primitives.table
+typed["nil"] = primitives["nil"]
+typed.none = primitives.none
+typed.vector = primitives.vector
+typed.buffer = primitives.buffer
+typed["function"] = primitives["function"]
+typed.callable = primitives.callable
+typed.userdata = primitives.userdata
+
+-- composite
+typed.array = require("@self/schemas/array")
+
+-- utility
+typed.any = require("@self/schemas/any")
+typed.literal = require("@self/schemas/literal")
+typed.optional = require("@self/schemas/optional")
+typed.transform = require("@self/schemas/transform")
+typed.union = require("@self/schemas/union")
+typed.intersect = require("@self/schemas/intersect")
+
+export type infer<T> = shared.infer<T>
+
+return typed

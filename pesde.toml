@@ -1,0 +1,31 @@
+name = "metamethods/typed"
+version = "0.1.0"
+description = "runtime type validation library for luau with full typechecking"
+authors = ["metamethods"]
+repository = "https://github.com/metamethods/typed"
+license = "MIT"
+includes = [
+  "pesde.toml",
+  "README.md",
+  "LICENSE",
+  "lib/**/*.luau",
+]
+
+[target]
+environment = "luau"
+lib = "lib/init.luau"
+
+[indices]
+default = "https://github.com/pesde-pkg/index"
+
+[scripts]
+roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
+sourcemap_generator = ".pesde/scripts/sourcemap_generator.luau"
+
+[dev_dependencies]
+scripts = { name = "pesde/scripts_rojo", version = "^0.2.0", target = "lune" }
+rojo = { name = "pesde/rojo", version = "^7.5.1", target = "lune" }
+
+[engines]
+pesde = "^0.7.0"
+lune = "^0.10.2"
