@@ -6,8 +6,8 @@ export type Schema<T> = {
 	validate: (value: any) -> result.ValidateResult,
 	parse: (value: any) -> result.ParseResult<T>,
 	unwrapParse: (value: any) -> T,
-	-- hi
 	enforce: (value: T) -> T,
+	optional: boolean?,
 }
 
 const function schema<T>(
