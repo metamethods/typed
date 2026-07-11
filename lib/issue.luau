@@ -90,6 +90,7 @@ export type ParseIssueType =
 	"failed_to_parse"
 	| "validate_failed"
 	| "missing_data"
+	| "missing_key"
 	| "unmergeable_value"
 	| "key_conflict"
 
@@ -112,6 +113,13 @@ end
 function issue.parse.missingData(message: string): ParseIssue
 	return {
 		type = "missing_data",
+		message = message,
+	}
+end
+
+function issue.parse.missingKey(message: string): ParseIssue
+	return {
+		type = "missing_key",
 		message = message,
 	}
 end
