@@ -21,7 +21,7 @@ function issue.formatIssue(issue: Issue): string
 end
 
 function issue.formatIssues(issues: { Issue }): string
-	local formattedIssues = {}
+	const formattedIssues = {}
 
 	for _, v in issues do
 		table.insert(formattedIssues, issue.formatIssue(v))
@@ -86,9 +86,16 @@ end
 
 issue.parse = {}
 
-export type ParseIssueType = "validate_failed" | "missing_data"
+export type ParseIssueType = "failed_to_parse" | "validate_failed" | "missing_data"
 
 export type ParseIssue = Issue<ParseIssueType>
+
+function issue.parse.failedToParse(message: string): ParseIssue
+	return {
+		type = "failed_to_parse",
+		message = message,
+	}
+end
 
 function issue.parse.validateFailed(validateIssue: { ValidateIssue }): ParseIssue
 	return {
