@@ -1,3 +1,4 @@
+const schema = require("@self/schema")
 const primitives = require("@self/schemas/primitives")
 const shared = require("@self/shared")
 
@@ -28,5 +29,7 @@ typed.union = require("@self/schemas/union")
 typed.intersect = require("@self/schemas/intersect")
 
 export type infer<T> = shared.infer<T>
+
+export type Schema<T> = schema.Schema<T>
 
 return typed
