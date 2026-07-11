@@ -73,6 +73,36 @@ const function tableSchema<T>(shape: T, options: TableOptions?): schema.Schema<i
 		end
 
 		return result.validate.ok()
+	end, function(value)
+		const newTable = {}
+		const issues = {}
+
+		for key, schema in shape do
+			const valueData = value[key]
+
+			if not valueData then
+				return result.parse.err({
+					issue.parse.missingData(`missing key {key}`),
+				})
+			end
+
+			const parseResult = schema.parse(value[key])
+
+			if parseResult.ok then
+				newTable[key] = parseResult.value
+			else
+				for _, parseIssue in parseResult.issues do
+					table.insert(issues, issue.appendContext(parseIssue, `{key}`))
+					continue
+				end
+			end
+		end
+
+		if #issues > 0 then
+			return result.parse.err(issues)
+		end
+
+		return result.parse.ok(newTable :: infer_shape<T>)
 	end)
 end
 

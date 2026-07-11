@@ -11,6 +11,8 @@ const function optionalSchema<T>(innerSchema: T): schema.Schema<shared.infer<T>?
 		else
 			return innerSchema.validate(value)
 		end
+	end, function(value)
+		return innerSchema.parse(value)
 	end)
 end
 
