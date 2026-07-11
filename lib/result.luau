@@ -24,7 +24,7 @@ export type ParseResultOk<T> = { ok: true, value: T }
 
 export type ParseResultErr = {
 	ok: false,
-	issues: { issue.ValidateIssue | issue.ParseIssue } | { issue.ValidateIssue } | { issue.ParseIssue },
+	issues: { issue.ParseIssue },
 }
 
 export type ParseResult<T> = ParseResultOk<T> | ParseResultErr
@@ -33,9 +33,7 @@ function result.parse.ok<T>(value: T): ParseResultOk<T>
 	return { ok = true, value = value }
 end
 
-function result.parse.err(
-	issues: { issue.ValidateIssue | issue.ParseIssue } | { issue.ValidateIssue } | { issue.ParseIssue }
-): ParseResultErr
+function result.parse.err(issues: { issue.ParseIssue }): ParseResultErr
 	return { ok = false, issues = issues }
 end
 

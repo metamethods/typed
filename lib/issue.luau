@@ -16,6 +16,20 @@ function issue.appendContext<T>(issue: Issue<T>, context: string): Issue<T>
 	return issue
 end
 
+function issue.formatIssue(issue: Issue): string
+	return `{if issue.context then `{issue.context}: ` else ""}{issue.type} - {issue.message}`
+end
+
+function issue.formatIssues(issues: { Issue }): string
+	local formattedIssues = {}
+
+	for _, v in issues do
+		table.insert(formattedIssues, issue.formatIssue(v))
+	end
+
+	return table.concat(formattedIssues, "\n")
+end
+
 issue.validate = {}
 
 export type ValidateIssueType =
@@ -72,8 +86,22 @@ end
 
 issue.parse = {}
 
-export type ParseIssueType = nil
+export type ParseIssueType = "validate_failed" | "missing_data"
 
 export type ParseIssue = Issue<ParseIssueType>
+
+function issue.parse.validateFailed(validateIssue: { ValidateIssue }): ParseIssue
+	return {
+		type = "validate_failed",
+		message = issue.formatIssues(validateIssue),
+	}
+end
+
+function issue.parse.missingData(message: string): ParseIssue
+	return {
+		type = "missing_data",
+		message = message,
+	}
+end
 
 return issue
