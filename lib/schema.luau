@@ -1,5 +1,5 @@
+const issue = require("./issue")
 const result = require("./result")
-const shared = require("./shared")
 
 export type Schema<T> = {
 	_infer: T,
@@ -10,7 +10,10 @@ export type Schema<T> = {
 	enforce: (value: T) -> T,
 }
 
-const function schema<T>(validateFn: (value: any) -> result.ValidateResult, parseFn: ((value: any) -> T)?): Schema<T>
+const function schema<T>(
+	validateFn: (value: any) -> result.ValidateResult,
+	parseFn: ((value: any) -> result.ParseResult<T>)?
+): Schema<T>
 	const schemaValidateFn = function(value: any): result.ValidateResult
 		return validateFn(value)
 	end
@@ -19,11 +22,13 @@ const function schema<T>(validateFn: (value: any) -> result.ValidateResult, pars
 		const validateResult = schemaValidateFn(value)
 
 		if not validateResult.ok then
-			return result.parse.err(validateResult.issues)
+			return result.parse.err({
+				issue.parse.validateFailed(validateResult.issues),
+			})
 		end
 
 		if parseFn then
-			return result.parse.ok(parseFn(value))
+			return parseFn(value)
 		else
 			return result.parse.ok(value)
 		end
@@ -35,7 +40,7 @@ const function schema<T>(validateFn: (value: any) -> result.ValidateResult, pars
 		unwrapParse = function(value)
 			const parseResult = schemaParseFn(value)
 			if not parseResult.ok then
-				error(shared.formatIssues(parseResult.issues))
+				error(issue.formatIssues(parseResult.issues))
 			end
 			return parseResult.value
 		end,
