@@ -8,7 +8,7 @@ export type Issue<T = any> = {
 
 function issue.appendContext<T>(issue: Issue<T>, context: string): Issue<T>
 	if issue.context then
-		issue.context ..= `; {context}`
+		issue.context = `{context}; {issue.context}`
 	else
 		issue.context = context
 	end
