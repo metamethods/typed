@@ -101,6 +101,7 @@ primitives.string = function(options: StringOptions?): schema.Schema<string>
 end
 
 primitives.table = require("@self/table")
+primitives.array = require("@self/array")
 
 primitives["nil"] = primitiveFn<<nil>>("nil")
 primitives.none = primitives["nil"]

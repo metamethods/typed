@@ -1,7 +1,7 @@
-const shared = require("../shared")
-const result = require("../result")
-const issue = require("../issue")
-const schema = require("../schema")
+const shared = require("../../shared")
+const result = require("../../result")
+const issue = require("../../issue")
+const schema = require("../../schema")
 
 const function arraySchema<T>(innerSchema: T): schema.Schema<{ shared.infer<T> }>
 	const innerSchema = innerSchema :: schema.Schema<T>

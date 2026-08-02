@@ -9,6 +9,7 @@ typed.boolean = primitives.boolean
 typed.number = primitives.number
 typed.string = primitives.string
 typed.table = primitives.table
+typed.array = primitives.array
 typed["nil"] = primitives["nil"]
 typed.none = primitives.none
 typed.vector = primitives.vector
@@ -16,9 +17,6 @@ typed.buffer = primitives.buffer
 typed["function"] = primitives["function"]
 typed.callable = primitives.callable
 typed.userdata = primitives.userdata
-
--- composite
-typed.array = require("@self/schemas/array")
 
 -- utility
 typed.any = require("@self/schemas/any")
