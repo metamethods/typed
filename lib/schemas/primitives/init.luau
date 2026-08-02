@@ -2,8 +2,8 @@ const result = require("../result")
 const issue = require("../issue")
 const schema = require("../schema")
 
-const function primitive<T>(typeName: string, validateFn: ((value: any) -> result.ValidateResult)?): schema.Schema<T>
-	return schema<<T>>(function(value)
+const function primitive<T>(typeName: string, validateFn: ((value: any) -> result.ValidateResult)?): schema.Schema<T, T>
+	return schema<<T, T>>(function(value)
 		if type(value) ~= typeName then
 			return result.validate.err({
 				issue.validate.invalidType(`expected {typeName}, got {typeof(value)}`),
@@ -18,8 +18,8 @@ const function primitive<T>(typeName: string, validateFn: ((value: any) -> resul
 	end)
 end
 
-const function primitiveFn<T>(typeName: string): () -> schema.Schema<T>
-	return function(): schema.Schema<T>
+const function primitiveFn<T>(typeName: string): () -> schema.Schema<T, T>
+	return function(): schema.Schema<T, T>
 		return primitive<<T>>(typeName)
 	end
 end
@@ -34,7 +34,7 @@ type NumberOptions = {
 	max: number?,
 }
 
-primitives.number = function(options: NumberOptions?): schema.Schema<number>
+primitives.number = function(options: NumberOptions?): schema.Schema<number, number>
 	const options: NumberOptions = options or {}
 
 	return primitive<<number>>("number", function(value)
@@ -68,7 +68,7 @@ type StringOptions = {
 	}?,
 }
 
-primitives.string = function(options: StringOptions?): schema.Schema<string>
+primitives.string = function(options: StringOptions?): schema.Schema<string, string>
 	const options: StringOptions = options or {}
 
 	return primitive<<string>>("string", function(value)

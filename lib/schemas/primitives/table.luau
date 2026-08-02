@@ -9,6 +9,13 @@ type function infer(schema: type)
 	error("shape has no readble 'infer' property")
 end
 
+-- stylua: ignore
+type function infer_parse(schema: type)
+    assert(schema:is("table"), "requires a table type")
+	for key, value in schema:properties() do if key:is("singleton") and key:value() == "_inferParse" and value.read then return value.read end end
+	error("shape has no readble 'infer' property")
+end
+
 type function infer_shape(shape: type)
 	assert(shape:is("table"), "requires a table type")
 
@@ -27,16 +34,34 @@ type function infer_shape(shape: type)
 	return result
 end
 
+type function infer_parse_shape(shape: type)
+	assert(shape:is("table"), "requires a table type")
+
+	const result = types.newtable()
+
+	for key, value in shape:properties() do
+		if value.read then
+			result:setreadproperty(key, infer_parse(value.read))
+		end
+
+		if value.write then
+			result:setwriteproperty(key, infer_parse(value.write))
+		end
+	end
+
+	return result
+end
+
 type TableOptions = {
 	strict: boolean?,
 }
 
-const function tableSchema<T>(shape: T, options: TableOptions?): schema.Schema<infer_shape<T>>
+const function tableSchema<T>(shape: T, options: TableOptions?): schema.Schema<infer_shape<T>, infer_parse_shape<T>>
 	const options: TableOptions = options or {}
 
-	const shape = shape :: { [any]: schema.Schema<unknown> }
+	const shape = shape :: { [any]: schema.Schema<unknown, unknown> }
 
-	return schema<<infer_shape<T>>>(function(value)
+	return schema<<infer_shape<T>, infer_shape<T>>>(function(value)
 		if type(value) ~= "table" then
 			return result.validate.err({
 				issue.validate.invalidType(`expected table, got {typeof(value)}`),

@@ -3,8 +3,8 @@ const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
 
-const function arraySchema<T>(innerSchema: T): schema.Schema<{ shared.infer<T> }>
-	const innerSchema = innerSchema :: schema.Schema<T>
+const function arraySchema<T>(innerSchema: T): schema.Schema<{ shared.infer<T> }, { shared.infer_parse<T> }>
+	const innerSchema = innerSchema :: schema.Schema<shared.infer<T>, shared.infer_parse<T>>
 
 	return schema<<{ shared.infer<T> }>>(function(value)
 		if type(value) ~= "table" then

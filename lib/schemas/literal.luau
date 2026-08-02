@@ -2,8 +2,8 @@ const issue = require("../issue")
 const result = require("../result")
 const schema = require("../schema")
 
-const function literalSchema<T>(literal: T): schema.Schema<T>
-	return schema<<T>>(function(value)
+const function literalSchema<T>(literal: T): schema.Schema<T, T>
+	return schema<<T, T>>(function(value)
 		if literal == value then
 			return result.validate.ok()
 		end
