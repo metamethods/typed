@@ -119,4 +119,6 @@ primitives.callable = primitives["function"]
 -- type definition i can use for it
 primitives.userdata = primitiveFn<<unknown>>("userdata")
 
+primitives.any = require("@self/any")
+
 return primitives

@@ -1,5 +1,5 @@
-const result = require("../result")
-const schema = require("../schema")
+const result = require("../../result")
+const schema = require("../../schema")
 
 const function anySchema(): schema.Schema<any>
 	return schema<<any>>(function(value)

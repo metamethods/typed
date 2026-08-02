@@ -4,7 +4,7 @@ const shared = require("@self/shared")
 
 const typed = {}
 
--- primitive
+-- primitives
 typed.boolean = primitives.boolean
 typed.number = primitives.number
 typed.string = primitives.string
@@ -18,9 +18,9 @@ typed.buffer = primitives.buffer
 typed["function"] = primitives["function"]
 typed.callable = primitives.callable
 typed.userdata = primitives.userdata
+typed.any = primitives.any
 
 -- utility
-typed.any = require("@self/schemas/any")
 typed.literal = require("@self/schemas/literal")
 typed.optional = require("@self/schemas/optional")
 typed.transform = require("@self/schemas/transform")
