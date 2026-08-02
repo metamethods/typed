@@ -1,24 +1,25 @@
 const issue = require("./issue")
 const result = require("./result")
 
-export type Schema<T> = {
+export type Schema<T, P> = {
 	_infer: T,
+	_inferParse: P,
 	validate: (value: any) -> result.ValidateResult,
-	parse: (value: any) -> result.ParseResult<T>,
-	unwrapParse: (value: any) -> T,
+	parse: (value: any) -> result.ParseResult<P>,
+	unwrapParse: (value: any) -> P,
 	enforce: (value: T) -> T,
 	optional: boolean?,
 }
 
-const function schema<T>(
+const function schema<T, P>(
 	validateFn: (value: any) -> result.ValidateResult,
-	parseFn: ((value: any) -> result.ParseResult<T>)?
-): Schema<T>
+	parseFn: ((value: any) -> result.ParseResult<P>)?
+): Schema<T, P>
 	const schemaValidateFn = function(value: any): result.ValidateResult
 		return validateFn(value)
 	end
 
-	const schemaParseFn = function(value: any): result.ParseResult<T>
+	const schemaParseFn = function(value: any): result.ParseResult<P>
 		const validateResult = schemaValidateFn(value)
 
 		if not validateResult.ok then
@@ -47,7 +48,7 @@ const function schema<T>(
 		enforce = function(value)
 			return value
 		end,
-	} :: Schema<T>
+	} :: Schema<T, P>
 end
 
 return schema
