@@ -29,6 +29,8 @@ typed.intersect = require("@self/schemas/intersect")
 
 export type infer<T> = shared.infer<T>
 
-export type Schema<T> = schema.Schema<T>
+export type infer_parse<T> = shared.infer_parse<T>
+
+export type Schema<T, P> = schema.Schema<T, P>
 
 return typed
