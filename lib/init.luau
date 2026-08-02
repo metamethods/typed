@@ -10,6 +10,7 @@ typed.number = primitives.number
 typed.string = primitives.string
 typed.table = primitives.table
 typed.array = primitives.array
+typed.iterable = primitives.iterable
 typed["nil"] = primitives["nil"]
 typed.none = primitives.none
 typed.vector = primitives.vector

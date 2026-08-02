@@ -102,6 +102,7 @@ end
 
 primitives.table = require("@self/table")
 primitives.array = require("@self/array")
+primitives.iterable = require("@self/iterable")
 
 primitives["nil"] = primitiveFn<<nil>>("nil")
 primitives.none = primitives["nil"]
