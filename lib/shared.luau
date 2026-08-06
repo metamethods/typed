@@ -7,7 +7,7 @@ export type function infer(schema: type)
 		end
 	end
 
-	error("shape has no readble 'infer' property")
+	error("shape has no readable 'infer' property")
 end
 
 const function joinArrays<T>(...: { T }): { T }
