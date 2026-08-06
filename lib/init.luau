@@ -1,3 +1,5 @@
+const result = require("@self/result")
+const issue = require("@self/issue")
 const schema = require("@self/schema")
 const primitives = require("@self/schemas/primitives")
 const shared = require("@self/shared")
@@ -27,8 +29,15 @@ typed.transform = require("@self/schemas/transform")
 typed.union = require("@self/schemas/union")
 typed.intersect = require("@self/schemas/intersect")
 
+typed.formatIssues = issue.formatIssues
+typed.formatIssue = issue.formatIssue
+
 export type infer<T> = shared.infer<T>
 
 export type Schema<T> = schema.Schema<T>
+
+export type ValidateResult = result.ValidateResult
+
+export type ParseResult<T> = result.ParseResult<T>
 
 return typed
