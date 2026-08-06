@@ -1,13 +1,11 @@
 const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
+const shared = require("../../shared")
 
--- stylua: ignore
-type function infer(schema: type)
-    assert(schema:is("table"), "requires a table type")
-	for key, value in schema:properties() do if key:is("singleton") and key:value() == "_infer" and value.read then return value.read end end
-	error("shape has no readble 'infer' property")
-end
+-- so this works
+-- i guess bro???
+type infer<T> = shared.infer<T>
 
 type function infer_shape(shape: type)
 	assert(shape:is("table"), "requires a table type")
