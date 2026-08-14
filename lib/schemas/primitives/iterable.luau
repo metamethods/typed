@@ -7,7 +7,7 @@ const function arraySchema<T0, T1>(keySchema: T0, valueSchema: T1)
 	const keySchema = keySchema :: schema.Schema<any>
 	const valueSchema = valueSchema :: schema.Schema<any>
 
-	return schema<<{ [shared.infer<T0>]: shared.infer<T1> }>>(function(value)
+	return schema<<{ [shared.infer<T0>]: shared.infer<T1>? }>>(function(value)
 		if type(value) ~= "table" then
 			return result.validate.err({
 				issue.validate.invalidType(`expected table, got {typeof(value)}`),
