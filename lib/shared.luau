@@ -10,12 +10,6 @@ export type function infer(schema: type)
 	error("shape has no readable 'infer' property")
 end
 
-export type function equals_then_else(ty: type, otherTy: type, thenTy: type, elseTy: type): type
-    return if ty == otherTy
-        then thenTy
-        else elseTy
-end
-
 const function joinArrays<T>(...: { T }): { T }
 	const result = {}
 
