@@ -3,9 +3,9 @@ const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
 
-const function arraySchema<T0, T1>(keySchema: T0, valueSchema: T1): schema.Schema<{ [shared.infer<T0>]: shared.infer<T1> }>
-	const keySchema = keySchema :: schema.Schema<T0>
-	const valueSchema = valueSchema :: schema.Schema<T1>
+const function arraySchema<T0, T1>(keySchema: T0, valueSchema: T1)
+	const keySchema = keySchema :: schema.Schema<any>
+	const valueSchema = valueSchema :: schema.Schema<any>
 
 	return schema<<{ [shared.infer<T0>]: shared.infer<T1> }>>(function(value)
 		if type(value) ~= "table" then

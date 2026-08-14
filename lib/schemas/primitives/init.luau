@@ -2,7 +2,7 @@ const result = require("../result")
 const issue = require("../issue")
 const schema = require("../schema")
 
-const function primitive<T>(typeName: string, validateFn: ((value: any) -> result.ValidateResult)?): schema.Schema<T>
+const function primitive<T>(typeName: string, validateFn: ((value: any) -> result.ValidateResult)?)
 	return schema<<T>>(function(value)
 		if type(value) ~= typeName then
 			return result.validate.err({
@@ -19,7 +19,7 @@ const function primitive<T>(typeName: string, validateFn: ((value: any) -> resul
 end
 
 const function primitiveFn<T>(typeName: string): () -> schema.Schema<T>
-	return function(): schema.Schema<T>
+	return function()
 		return primitive<<T>>(typeName)
 	end
 end
@@ -34,7 +34,7 @@ type NumberOptions = {
 	max: number?,
 }
 
-primitives.number = function(options: NumberOptions?): schema.Schema<number>
+primitives.number = function(options: NumberOptions?)
 	const options: NumberOptions = options or {}
 
 	return primitive<<number>>("number", function(value)
@@ -68,7 +68,7 @@ type StringOptions = {
 	}?,
 }
 
-primitives.string = function(options: StringOptions?): schema.Schema<string>
+primitives.string = function(options: StringOptions?)
 	const options: StringOptions = options or {}
 
 	return primitive<<string>>("string", function(value)
@@ -101,8 +101,10 @@ primitives.string = function(options: StringOptions?): schema.Schema<string>
 end
 
 primitives.table = require("@self/table")
-primitives.array = require("@self/array")
 primitives.iterable = require("@self/iterable")
+primitives.array = function<T>(innerSchema: T)
+    return primitives.iterable(primitives.number(), innerSchema)
+end
 
 primitives["nil"] = primitiveFn<<nil>>("nil")
 primitives.none = primitives["nil"]

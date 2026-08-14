@@ -1,7 +1,7 @@
 const result = require("../../result")
 const schema = require("../../schema")
 
-const function anySchema(): schema.Schema<any>
+const function anySchema()
 	return schema<<any>>(function(value)
 		return result.validate.ok()
 	end)

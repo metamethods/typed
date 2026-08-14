@@ -2,10 +2,10 @@ const result = require("../result")
 const shared = require("../shared")
 const schema = require("../schema")
 
-const function transformSchema<T>(innerSchema: T): <R>(transformFn: (shared.infer<T>) -> R) -> schema.Schema<R>
-	const innerSchema = innerSchema :: schema.Schema<T>
+const function transformSchema<T>(innerSchema: T)
+	const innerSchema = innerSchema :: schema.Schema<any>
 
-	return function<R>(transformFn)
+	return function<R>(transformFn: (shared.infer<T>) -> R)
 		return schema<<R>>(function(value: shared.infer<T>)
 			return innerSchema.validate(value)
 		end, function(value: any)
