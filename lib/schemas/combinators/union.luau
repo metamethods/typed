@@ -4,8 +4,8 @@ const result = require("../../result")
 const schema = require("../../schema")
 
 const function unionSchema<T0, T1>(schemaA: T0, schemaB: T1)
-	const schemaA = schemaA :: schema.Schema<any>
-	const schemaB = schemaB :: schema.Schema<any>
+	const schemaA = schemaA :: schema.Schema<shared.infer<T0>>
+	const schemaB = schemaB :: schema.Schema<shared.infer<T1>>
 
 	return schema<<shared.infer<T0> | shared.infer<T1>>>(function(value)
 		const validateResult0 = schemaA.validate(value)

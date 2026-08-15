@@ -3,7 +3,7 @@ const result = require("../../result")
 const schema = require("../../schema")
 
 const function optionalSchema<T>(innerSchema: T)
-	const innerSchema = innerSchema :: schema.Schema<any>
+	const innerSchema = innerSchema :: schema.Schema<shared.infer<T>>
 
 	const newSchema = schema<<shared.infer<T>?>>(function(value)
 		if value == nil then
@@ -12,7 +12,7 @@ const function optionalSchema<T>(innerSchema: T)
 			return innerSchema.validate(value)
 		end
 	end, function(value)
-		return innerSchema.parse(value)
+		return innerSchema.parseCast<<shared.infer<T>?>>(value)
 	end)
 
 	newSchema.optional = true

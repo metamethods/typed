@@ -32,7 +32,7 @@ type TableOptions = {
 const function tableSchema<T>(shape: T, options: TableOptions?)
 	const options: TableOptions = options or {}
 
-	const shape = shape :: { [any]: schema.Schema<any> }
+	const shape = shape :: { [unknown]: schema.Schema<unknown> }
 
 	return schema<<infer_shape<T>>>(function(value)
 		if type(value) ~= "table" then
