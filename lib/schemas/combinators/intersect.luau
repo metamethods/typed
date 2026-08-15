@@ -1,7 +1,7 @@
-const issue = require("../issue")
-const shared = require("../shared")
-const result = require("../result")
-const schema = require("../schema")
+const issue = require("../../issue")
+const shared = require("../../shared")
+const result = require("../../result")
+const schema = require("../../schema")
 
 const function intersectSchema<T0, T1>(schemaA: T0, schemaB: T1)
 	const schemaA = schemaA :: schema.Schema<any>

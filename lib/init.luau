@@ -1,33 +1,42 @@
 const result = require("@self/result")
 const issue = require("@self/issue")
 const schema = require("@self/schema")
-const primitives = require("@self/schemas/primitives")
+const builtins = require("@self/schemas/builtins")
 const shared = require("@self/shared")
 
 const typed = {}
 
--- primitives
-typed.boolean = primitives.boolean
-typed.number = primitives.number
-typed.string = primitives.string
-typed.table = primitives.table
-typed.array = primitives.array
-typed.iterable = primitives.iterable
-typed["nil"] = primitives["nil"]
-typed.none = primitives.none
-typed.vector = primitives.vector
-typed.buffer = primitives.buffer
-typed["function"] = primitives["function"]
-typed.callable = primitives.callable
-typed.userdata = primitives.userdata
-typed.any = primitives.any
+-- base
+typed.any = require("@self/schemas/base/any")
+typed.literal = require("@self/schemas/base/literal")
+typed.is = require("@self/schemas/base/is")
+-- no im not exporting primitiveSchema; it is a moreso internal schema builder
+-- although if demanded, i'll export it
 
--- utility
-typed.literal = require("@self/schemas/literal")
-typed.optional = require("@self/schemas/optional")
-typed.transform = require("@self/schemas/transform")
-typed.union = require("@self/schemas/union")
-typed.intersect = require("@self/schemas/intersect")
+-- builtins
+typed.boolean = builtins.boolean
+typed.number = builtins.number
+typed.string = builtins.string
+typed["nil"] = builtins["nil"]
+typed.none = builtins.none
+typed.vector = builtins.vector
+typed.buffer = builtins.buffer
+typed["function"] = builtins["function"]
+typed.callable = builtins.callable
+typed.userdata = builtins.userdata
+
+-- structures
+typed.table = require("@self/schemas/structures/table")
+typed.array = require("@self/schemas/structures/array")
+typed.iterable = require("@self/schemas/structures/iterable")
+
+-- modifiers
+typed.optional = require("@self/schemas/modifiers/optional")
+typed.transform = require("@self/schemas/modifiers/transform")
+
+-- combinators
+typed.union = require("@self/schemas/combinators/union")
+typed.intersect = require("@self/schemas/combinators/intersect")
 
 typed.formatIssues = issue.formatIssues
 typed.formatIssue = issue.formatIssue

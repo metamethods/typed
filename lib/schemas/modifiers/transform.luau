@@ -1,6 +1,6 @@
-const result = require("../result")
-const shared = require("../shared")
-const schema = require("../schema")
+const result = require("../../result")
+const shared = require("../../shared")
+const schema = require("../../schema")
 
 const function transformSchema<T>(innerSchema: T)
 	const innerSchema = innerSchema :: schema.Schema<any>

@@ -3,7 +3,7 @@ const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
 
-const function iterableSchema<T0, T1, O>(keySchema: T0, valueSchema: T1)
+const function iterableSchema<T0, T1>(keySchema: T0, valueSchema: T1)
 	const keySchema = keySchema :: schema.Schema<any>
 	const valueSchema = valueSchema :: schema.Schema<any>
 

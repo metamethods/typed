@@ -1,6 +1,6 @@
-const shared = require("../shared")
-const result = require("../result")
-const schema = require("../schema")
+const shared = require("../../shared")
+const result = require("../../result")
+const schema = require("../../schema")
 
 const function optionalSchema<T>(innerSchema: T)
 	const innerSchema = innerSchema :: schema.Schema<any>
