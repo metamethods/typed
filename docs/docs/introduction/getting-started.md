@@ -118,6 +118,4 @@ typed schemas expose more than `.parse()`. take a look below to see what you nee
 
 ## next steps
 
-- [Guide: Schemas](../guide/schemas) - A deeper dive into what a schema is
-- [Guide: Combinators](../guide/combinators) - All the combinator schemas
-- [Guide: Modifiers](../guide/modifiers) - All the modifier schemas
+- [Guide: Writing Schemas](../guide/writing-schemas) - Learn how to write typed schemas
