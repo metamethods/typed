@@ -26,13 +26,13 @@ const function iterableSchema<T0, T1>(keySchema: T0, valueSchema: T1)
 
 			if not keyValidateResult.ok then
 				for _, validationIssue in keyValidateResult.issues do
-					table.insert(issues, issue.appendContext(validationIssue, `at index {index}`))
+					table.insert(issues, issue.appendContext(validationIssue, `at index {index}'s key`))
 				end
 			end
 
 			if not valueValidateResult.ok then
 				for _, validationIssue in valueValidateResult.issues do
-					table.insert(issues, issue.appendContext(validationIssue, `at index {index}`))
+					table.insert(issues, issue.appendContext(validationIssue, `at index {index}'s value`))
 				end
 			end
 		end
