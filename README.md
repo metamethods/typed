@@ -19,7 +19,7 @@ const userSchema = t.table({
 		},
 	}),
 	age = t.number({ min = 18 }),
-	email = t.optional(t.string({ match = "^.+@.+\..+$" })),
+	email = t.optional(t.string({ match = "^.+@.+%..+$" })),
 	tags = t.array(t.string()),
 })
 
