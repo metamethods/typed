@@ -5,7 +5,6 @@ export type Schema<T> = {
 	_infer: T,
 	validate: (value: any) -> result.ValidateResult,
 	parse: (value: any) -> result.ParseResult<T>,
-	parseCast: <C>(value: any) -> result.ParseResult<C>,
 	unwrapParse: (value: any) -> T,
 	enforce: (value: T) -> T,
 }
@@ -37,9 +36,6 @@ const function schema<T>(
 	return {
 		validate = schemaValidateFn,
 		parse = schemaParseFn,
-		parseCast = function<C>(value: any)
-			return schemaParseFn(value) :: result.ParseResult<C>
-		end,
 		unwrapParse = function(value)
 			const parseResult = schemaParseFn(value)
 			if not parseResult.ok then
