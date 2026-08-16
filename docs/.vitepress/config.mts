@@ -7,7 +7,12 @@ export default defineConfig({
   title: "typed",
   description: "Luau runtime type validation library",
   themeConfig: {
-    nav: [{ text: "docs", link: "/introduction/what-is-typed" }],
+    nav: [
+      {
+        text: "Docs",
+        link: "/introduction/what-is-typed",
+      },
+    ],
 
     sidebar: [
       {
