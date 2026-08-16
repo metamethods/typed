@@ -8,21 +8,38 @@ a runtime type validation library for luau
 ## example
 
 ```luau
-const t = require("typed")
+const t = require("./lib")
 
-const schema = t.table({
-	hello = t.string(),
-	world = t.number(),
+-- define a user schema
+const userSchema = t.table({
+	username = t.string({
+		length = {
+			min = 3,
+			max = 20,
+		},
+	}),
+	age = t.number({ min = 18 }),
+	email = t.optional(t.string({ match = "^.+@.+\..+$" })),
+	tags = t.array(t.string()),
 })
 
-const data = {
-	hello = "hello",
-	world = 42,
+-- pull out the generated type using the infer type function
+type User = t.infer<typeof(userSchema)>
+
+const rawData = {
+	username = "alex",
+	age = 25,
+	email = "test@gamil.com",
+	tags = { "admin", "developer" },
 }
 
-print(schema.parse(data)) -- { ok = true, value = { hello = "hello", world = 42 } }
+-- attempt to validate and parse the raw data using the created schema
+const result = userSchema.parse(rawData)
+
+if result.ok then
+	const user: User = result.value
+	print(user)
+else
+	print("failed to validate:", t.formatIssues(result.issues))
+end
 ```
-
-## usage
-
-todo
