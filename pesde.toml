@@ -1,5 +1,5 @@
 name = "metamethods/typed"
-version = "0.5.0"
+version = "0.6.0"
 description = "luau runtime type validation library"
 authors = ["metamethods"]
 repository = "https://github.com/metamethods/typed"
