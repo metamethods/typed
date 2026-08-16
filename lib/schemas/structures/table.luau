@@ -44,13 +44,6 @@ const function tableSchema<T>(shape: T, options: TableOptions?)
 		const issues = {}
 
 		for key, schema in shape do
-			if value[key] == nil then
-				if not schema.optional then
-					table.insert(issues, issue.appendContext(issue.validate.missingKey(`missing key`), `{key}`))
-				end
-				continue
-			end
-
 			const validationResult = schema.validate(value[key])
 
 			if not validationResult.ok then
@@ -78,15 +71,6 @@ const function tableSchema<T>(shape: T, options: TableOptions?)
 		const issues = {}
 
 		for key, schema in shape do
-			const valueData = value[key]
-
-			if valueData == nil then
-				if not schema.optional then
-					table.insert(issues, issue.appendContext(issue.parse.missingKey(`missing key`), `{key}`))
-				end
-				continue
-			end
-
 			const parseResult = schema.parse(value[key])
 
 			if parseResult.ok then

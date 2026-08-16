@@ -8,7 +8,6 @@ export type Schema<T> = {
 	parseCast: <C>(value: any) -> result.ParseResult<C>,
 	unwrapParse: (value: any) -> T,
 	enforce: (value: T) -> T,
-	optional: boolean?,
 }
 
 const function schema<T>(

@@ -32,13 +32,7 @@ end
 
 issue.validate = {}
 
-export type ValidateIssueType =
-	"invalid_type"
-	| "invalid_length"
-	| "invalid_match"
-	| "invalid_value"
-	| "missing_key"
-	| "extra_key"
+export type ValidateIssueType = "invalid_type" | "invalid_length" | "invalid_match" | "invalid_value" | "extra_key"
 
 export type ValidateIssue = Issue<ValidateIssueType>
 
@@ -70,13 +64,6 @@ function issue.validate.invalidValue(message: string): ValidateIssue
 	}
 end
 
-function issue.validate.missingKey(message: string): ValidateIssue
-	return {
-		type = "missing_key",
-		message = message,
-	}
-end
-
 function issue.validate.extraKey(message: string): ValidateIssue
 	return {
 		type = "extra_key",
@@ -90,7 +77,6 @@ export type ParseIssueType =
 	"failed_to_parse"
 	| "validate_failed"
 	| "missing_data"
-	| "missing_key"
 	| "unmergeable_value"
 	| "key_conflict"
 
@@ -113,13 +99,6 @@ end
 function issue.parse.missingData(message: string): ParseIssue
 	return {
 		type = "missing_data",
-		message = message,
-	}
-end
-
-function issue.parse.missingKey(message: string): ParseIssue
-	return {
-		type = "missing_key",
 		message = message,
 	}
 end
