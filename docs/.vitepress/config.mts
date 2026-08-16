@@ -1,13 +1,13 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  srcDir: "src",
+  srcDir: "./",
   base: "/typed/",
 
   title: "typed",
   description: "Luau runtime type validation library",
   themeConfig: {
-    nav: [{ text: "docs", link: "/docs/introduction/what-is-typed" }],
+    nav: [{ text: "docs", link: "/introduction/what-is-typed" }],
 
     sidebar: [
       {
@@ -15,11 +15,11 @@ export default defineConfig({
         items: [
           {
             text: "What is Typed",
-            link: "/docs/introduction/what-is-typed",
+            link: "/introduction/what-is-typed",
           },
           {
             text: "Getting Started",
-            link: "/docs/introduction/getting-started",
+            link: "/introduction/getting-started",
           },
         ],
       },
@@ -28,15 +28,15 @@ export default defineConfig({
         items: [
           {
             text: "Schemas",
-            link: "/docs/guide/schemas",
+            link: "/guide/schemas",
           },
           {
             text: "Modifiers",
-            link: "/docs/guide/modifiers",
+            link: "/guide/modifiers",
           },
           {
             text: "Combinators",
-            link: "/docs/guide/combinators",
+            link: "/guide/combinators",
           },
         ],
       },

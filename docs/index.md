@@ -8,12 +8,12 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /docs/introduction/what-is-typed
+      link: /introduction/what-is-typed
     # - theme: alt
     #   text: API Examples
     #   link: /api-examples
 
-features:
+# features:
 #   - title: Feature A
 #     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 #   - title: Feature B
