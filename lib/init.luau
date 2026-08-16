@@ -8,6 +8,8 @@ local typed = {}
 
 -- base
 typed.any = require("@self/schemas/base/any")
+typed.unknown = require("@self/schemas/base/unknown")
+typed.never = require("@self/schemas/base/never")
 typed.literal = require("@self/schemas/base/literal")
 typed.is = require("@self/schemas/base/is")
 -- no im not exporting primitiveSchema; it is a moreso internal schema builder
