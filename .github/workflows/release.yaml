@@ -28,7 +28,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
-            - uses: CompeyDev/setup-rokit@v0.2.1
+            - uses: lumin-org/setup-pesde@v0.4.1
             - run: pesde install
             - run: pesde auth login --token "${{ secrets.PESDE_TOKEN }}"
             - run: pesde publish --yes
