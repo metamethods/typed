@@ -3,7 +3,7 @@
 
 # typed
 
-a runtime type validation library for luau
+luau runtime type validation library
 
 ## example
 

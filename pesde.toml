@@ -1,6 +1,6 @@
 name = "metamethods/typed"
 version = "0.4.2"
-description = "runtime type validation library for luau with full typechecking"
+description = "luau runtime type validation library"
 authors = ["metamethods"]
 repository = "https://github.com/metamethods/typed"
 license = "MIT"
