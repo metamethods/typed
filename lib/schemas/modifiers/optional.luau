@@ -1,6 +1,3 @@
-const shared = require("../../shared")
-const result = require("../../result")
-const schema = require("../../schema")
 const builtins = require("../builtins")
 const union = require("../combinators/union")
 
