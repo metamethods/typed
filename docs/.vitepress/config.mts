@@ -2,6 +2,7 @@ import { defineConfig } from "vitepress";
 
 export default defineConfig({
   srcDir: "src",
+  base: "/typed/",
 
   title: "typed",
   description: "luau runtime type validation library",
