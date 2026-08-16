@@ -2,7 +2,7 @@
 
 ## Installation
 
-`typed` can be installed either by grabbing the rbxm from [Github Releases](https://github.com/metamethods/typed/releases), or using the following command below:
+typed can be installed either by grabbing the rbxm from [Github Releases](https://github.com/metamethods/typed/releases), or using the following command below:
 
 ::: code-group
 
@@ -107,7 +107,7 @@ age: invalid_value - expected number at least 18, got 16
 
 ## Methods Overview
 
-`typed` schemas expose more than `.parse()`. take a look below to see what you need:
+typed schemas expose more than `.parse()`. take a look below to see what you need:
 
 | method                | use it when                                                                                                                                                      |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -116,7 +116,7 @@ age: invalid_value - expected number at least 18, got 16
 | `.unwrapParse(value)` | If you are confident the value is valid, you can get the value back immediately, while having it passed through `.parse()`, but it will error if the parse fails |
 | `.enforce(value)`     | You already have a `T` and want to assert it so it satifies the schema.                                                                                          |
 
-## Next Steps
+## next steps
 
 - [Guide: Schemas](../guide/schemas) - A deeper dive into what a schema is
 - [Guide: Combinators](../guide/combinators) - All the combinator schemas

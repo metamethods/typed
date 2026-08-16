@@ -7,45 +7,51 @@ export default defineConfig({
   title: "typed",
   description: "Luau runtime type validation library",
   themeConfig: {
+    outline: "deep",
+
     nav: [
       {
         text: "Docs",
-        link: "/introduction/what-is-typed",
+        link: "/docs/introduction/what-is-typed",
+      },
+      {
+        text: "API",
+        link: "/api/schema",
       },
     ],
 
-    sidebar: [
-      {
-        text: "Introduction",
-        items: [
-          {
-            text: "What is Typed",
-            link: "/introduction/what-is-typed",
-          },
-          {
-            text: "Getting Started",
-            link: "/introduction/getting-started",
-          },
-        ],
-      },
-      {
-        text: "Guide",
-        items: [
-          {
-            text: "Schemas",
-            link: "/guide/schemas",
-          },
-          {
-            text: "Modifiers",
-            link: "/guide/modifiers",
-          },
-          {
-            text: "Combinators",
-            link: "/guide/combinators",
-          },
-        ],
-      },
-    ],
+    sidebar: {
+      "/docs/": [
+        {
+          text: "Introduction",
+          items: [
+            {
+              text: "What is Typed",
+              link: "/docs/introduction/what-is-typed",
+            },
+            {
+              text: "Getting Started",
+              link: "/docs/introduction/getting-started",
+            },
+          ],
+        },
+        {
+          text: "Guide",
+          items: [
+            {
+              text: "Writing Schemas",
+              link: "/docs/guide/writing-schemas",
+            },
+          ],
+        },
+      ],
+      "/api/": [
+        {
+          text: "Schema",
+          link: "/api/schema",
+        },
+      ],
+    },
 
     socialLinks: [
       { icon: "github", link: "https://github.com/metamethods/typed" },

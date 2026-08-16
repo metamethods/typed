@@ -1,4 +1,4 @@
-# Schemas
+# Schema
 
 Everything in `typed` -- `t.string()`, `t.table({ ... })`, `t.union(a, b)`, and i mean everything -- returns the same object: a `Schema<T>`. This page covers it in full since it is the foundation of the `typed` library.
 
