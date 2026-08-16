@@ -1,12 +1,12 @@
-# what is typed?
+# What is Typed?
 
 ::: caution
-library is still under development; use at your own risk
+Library is still under development; use at your own risk
 :::
 
-`typed` is a runtime type validation library for luau. if you have used [Zod](https://zod.dev) before, the api should feel a bit familiar: building schemas to define what a value should look like, then be able to validate it against data that comes from arbitrary sources.
+`typed` is a runtime type validation library for luau. If you have used [Zod](https://zod.dev) before, the api should feel a bit familiar: building schemas to define what a value should look like, then be able to validate it against data that comes from arbitrary sources.
 
-## a first glance
+## At a First Glance
 
 ```luau
 const t = require("typed")
@@ -45,21 +45,21 @@ else
 end
 ```
 
-if `rawData` is missing `username`, or `age` is `17`, or `email` doesn't look like an email, `result.ok` is `false` and `result.issues` would tell you exactly what failed -- instead of letting a bad value get dropped with no information, or even worse, having the bad value slip through into the rest of your program.
+If `rawData` is missing `username`, or `age` is `17`, or `email` doesn't look like an email, `result.ok` is `false` and `result.issues` would tell you exactly what failed instead of letting a bad value get dropped with no information, or even worse, having the bad value slip through into the rest of your program.
 
-## at the core
+## At the Core
 
-`typed` is made of small set of composable parts
+`typed` is made of small set of composable parts.
 
-- **base schemas** - `t.any`, `t.literal`, `t.is`
-- **builtins** - `t.boolean`, `t.number`, `t.string`, `t.none`, `t.vector`, `t.buffer`, `t.callable`, `t.userdata`
-- **structures** - `t.table`, `t.array`, `t.iterable`
-- **modifiers** - `t.optional`, `t.transform`
-- **combinators** - `t.union`, `t.intersect`
+- **Base schemas** - `t.any`, `t.literal`, `t.is`
+- **Builtins** - `t.boolean`, `t.number`, `t.string`, `t.none`, `t.vector`, `t.buffer`, `t.callable`, `t.userdata`
+- **Structures** - `t.table`, `t.array`, `t.iterable`
+- **Modifiers** - `t.optional`, `t.transform`
+- **Combinators** - `t.union`, `t.intersect`
 
-every single schema -- no matter how it was created -- contains the same set of methods you can call: `validate`, `parse`, `unwrapParse`, and `enforce`.
+Every single schema -- no matter how it was created -- contains the same set of methods you can call: `validate`, `parse`, `unwrapParse`, and `enforce`.
 
-## next steps
+## Next Steps
 
-- [getting started](./getting-started) - installing `typed` into your project, and learn how to build your first schema
-- [guide](../guide/schemas) - learn about how `typed` really works
+- [Getting Started](./getting-started) - Installing `typed` into your project, and learn how to build your first schema
+- [Guide](../guide/schemas) - Learn about how `typed` really works

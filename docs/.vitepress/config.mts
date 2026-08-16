@@ -5,37 +5,37 @@ export default defineConfig({
   base: "/typed/",
 
   title: "typed",
-  description: "luau runtime type validation library",
+  description: "Luau runtime type validation library",
   themeConfig: {
     nav: [{ text: "docs", link: "/docs/introduction/what-is-typed" }],
 
     sidebar: [
       {
-        text: "introduction",
+        text: "Introduction",
         items: [
           {
-            text: "what is typed",
+            text: "What is Typed",
             link: "/docs/introduction/what-is-typed",
           },
           {
-            text: "getting started",
+            text: "Getting Started",
             link: "/docs/introduction/getting-started",
           },
         ],
       },
       {
-        text: "guide",
+        text: "Guide",
         items: [
           {
-            text: "schemas",
+            text: "Schemas",
             link: "/docs/guide/schemas",
           },
           {
-            text: "modifiers",
+            text: "Modifiers",
             link: "/docs/guide/modifiers",
           },
           {
-            text: "combinators",
+            text: "Combinators",
             link: "/docs/guide/combinators",
           },
         ],

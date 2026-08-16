@@ -1,8 +1,8 @@
-# schemas
+# Schemas
 
-everything in `typed` -- `t.string()`, `t.table({ ... })`, `t.union(a, b)`, and i mean everything -- returns the same object: a `Schema<T>`. this page covers it in full since it is the foundation of the `typed` library.
+Everything in `typed` -- `t.string()`, `t.table({ ... })`, `t.union(a, b)`, and i mean everything -- returns the same object: a `Schema<T>`. This page covers it in full since it is the foundation of the `typed` library.
 
-## the schema type
+## The Schema Type
 
 ```luau
 export type Schema<T> = {
@@ -14,11 +14,11 @@ export type Schema<T> = {
 }
 ```
 
-`T` is the type the schema describes. `_infer` exists so `T` can live under it which enables `t.infer<typeof(schema)>` to be able to pull out a type from the given schema.
+`T` is the type the schema describes. `_infer` exists so `T` can live under it which enables `t.infer<typeof(schema)>` to be able to pull out a type.
 
 ## `.validate(value)`
 
-checks a value against the schema and tells you if it passed.
+Checks a value against the schema and tells you if it passed.
 
 ```luau
 const result = t.number({ min = 0 }).validate(-5)
@@ -28,23 +28,23 @@ if not result.ok then
 end
 ```
 
-this returns a `ValidateResult`:
+This returns a `ValidateResult`:
 
 ```luau
 type ValidateResult = { ok: true } | { ok: false, issues: { ValidateIssue } }
 ```
 
 ::: tip
-notice how a successful validation carries **no value**, only `{ ok = true }`. only use this if you just need a yes/no answer if the data you passed in is valid or not.
+Notice how a successful validation carries **no value**, only `{ ok = true }`. Only use this if you just need a yes/no answer if the data you passed in is valid or not.
 :::
 
 ::: caution
-do not trust the original value after calling `.validate`, since some schemas may implement transformable schemas (e.g `t.transform`) and can change the schema's resulting type. instead use `.parse` to be on the safer side.
+Do not trust the original value after calling `.validate`, since some schemas may implement transformable schemas (e.g `t.transform`) and can change the schema's resulting type. Instead use `.parse` to be on the safer side.
 :::
 
 ## `.parse(value)`
 
-the one you'll probably use the most. validates the passed value and, if it passes, hands back the (possibly transformed) result.
+The one you'll probably use the most. Validates the passed value and, if it passes, hands back the (possibly transformed) result.
 
 ```luau
 const result = userSchema.parse(rawData)
@@ -57,23 +57,23 @@ else
 end
 ```
 
-the method returns a `ParseResult<T>`
+The method returns a `ParseResult<T>`
 
 ```luau
 type ParseResult<T> = { ok: true, value: T } | { ok: false, issues: { ParseIssue } }
 ```
 
-internally, `.parse` will always run `.validate` first. if the validation fails, you'll get a `ParseResult` with a single `validate_failed` issue which wraps around all the validation issues that occured when validating the value.
+Internally, `.parse` will always run `.validate` first. If the validation fails, you'll get a `ParseResult` with a single `validate_failed` issue which wraps around all the validation issues that occured when validating the value.
 
 ## `.unwrapParse(value)`
 
-runs `.parse` and either returns the parsed value directly or throws an `error(..)` with the formatted issues.
+Runs `.parse` and either returns the parsed value directly or throws an `error(..)` with the formatted issues.
 
 ```luau
 const user = userSchema.unwrapParse(rawData) -- user, or throws an error
 ```
 
-use this at areas where you know **for sure** that the value is valid and error if there is a genuine bug in your program. you can also use this to quickly try out some stuff if you rather not handle the error manually.
+Use this at areas where you know **for sure** that the value is valid and error if there is a genuine bug in your program. You can also use this to quickly try out some stuff if you rather not handle the error manually.
 
 ## `.enforce(value)`
 
@@ -81,7 +81,7 @@ use this at areas where you know **for sure** that the value is valid and error 
 enforce: (value: T) -> T
 ```
 
-this is the one method that does not perform a runtime check -- rather it is here mainly to help easily cast your data to be like your schema. this is mainly used when you are writing the parsed values yourself manually in code and would like to be sure that you are writing the value correctly.
+This is the one method that does not perform a runtime check -- rather it is here mainly to help easily cast your data to be like your schema. This is mainly used when you are writing the parsed values yourself manually in code and would like to be sure that you are writing the value correctly.
 
 ```luau
 const tableOfUsers: { t.infer<typeof(userSchema)> } = {
