@@ -1,10 +1,10 @@
-const result = require("@self/result")
-const issue = require("@self/issue")
-const schema = require("@self/schema")
-const builtins = require("@self/schemas/builtins")
-const shared = require("@self/shared")
+local builtins = require("@self/schemas/builtins")
+local issue = require("@self/issue")
+local result = require("@self/result")
+local schema = require("@self/schema")
+local shared = require("@self/shared")
 
-const typed = {}
+local typed = {}
 
 -- base
 typed.any = require("@self/schemas/base/any")
