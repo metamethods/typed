@@ -22,12 +22,3 @@ jobs:
                   generate_release_notes: true
                   draft: true
                   files: typed.rbxm
-    publish-pesde:
-        name: publish pesde
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
-            - uses: lumin-org/setup-pesde@v0.4.1
-            - run: pesde install
-            - run: pesde auth login --token "${{ secrets.PESDE_TOKEN }}"
-            - run: pesde publish --yes
