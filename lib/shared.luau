@@ -1,7 +1,7 @@
-export type function infer(schema: type)
-	assert(schema:is("table"), "requires a table type")
+export type function infer(schemaTy: type): type
+	assert(schemaTy:is("table"), "requires a table type")
 
-	for key, value in schema:properties() do
+	for key, value in schemaTy:properties() do
 		if key:is("singleton") and key:value() == "_infer" and value.read then
 			return value.read
 		end
