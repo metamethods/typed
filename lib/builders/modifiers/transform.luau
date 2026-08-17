@@ -2,7 +2,7 @@ const result = require("../../result")
 const shared = require("../../shared")
 const schema = require("../../schema")
 
-const function transformSchema<T>(innerSchema: T)
+const function transformSchemaBuilder<T>(innerSchema: T)
 	const innerSchema = innerSchema :: schema.Schema<shared.infer<T>>
 
 	return function<R>(transformFn: (shared.infer<T>) -> R)
@@ -17,4 +17,4 @@ const function transformSchema<T>(innerSchema: T)
 	end
 end
 
-return transformSchema
+return transformSchemaBuilder

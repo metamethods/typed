@@ -3,11 +3,11 @@ const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
 
-const function iterableSchema<T0, T1>(keySchema: T0, valueSchema: T1)
-	const keySchema = keySchema :: schema.Schema<shared.infer<T0>>
-	const valueSchema = valueSchema :: schema.Schema<shared.infer<T1>>
+const function iterableSchemaBuilder<K, T>(keySchema: K, valueSchema: T)
+	const keySchema = keySchema :: schema.Schema<shared.infer<K>>
+	const valueSchema = valueSchema :: schema.Schema<shared.infer<T>>
 
-	return schema<<{ [shared.infer<T0>]: shared.infer<T1>? }>>(function(value)
+	return schema<<{ [shared.infer<K>]: shared.infer<T>? }>>(function(value)
 		if type(value) ~= "table" then
 			return result.validate.err({
 				issue.validate.invalidType(`expected table, got {typeof(value)}`),
@@ -45,4 +45,4 @@ const function iterableSchema<T0, T1>(keySchema: T0, valueSchema: T1)
 	end)
 end
 
-return iterableSchema
+return iterableSchemaBuilder

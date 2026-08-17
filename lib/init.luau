@@ -1,4 +1,4 @@
-local builtins = require("@self/schemas/builtins")
+local builtinSchemaBuilders = require("@self/builders/builtins")
 local issue = require("@self/issue")
 local result = require("@self/result")
 local schema = require("@self/schema")
@@ -7,38 +7,38 @@ local shared = require("@self/shared")
 local typed = {}
 
 -- base
-typed.any = require("@self/schemas/base/any")
-typed.unknown = require("@self/schemas/base/unknown")
-typed.never = require("@self/schemas/base/never")
-typed.literal = require("@self/schemas/base/literal")
-typed.is = require("@self/schemas/base/is")
+typed.any = require("@self/builders/base/any")
+typed.unknown = require("@self/builders/base/unknown")
+typed.never = require("@self/builders/base/never")
+typed.literal = require("@self/builders/base/literal")
+typed.is = require("@self/builders/base/is")
 -- no im not exporting primitiveSchema; it is a moreso internal schema builder
 -- although if demanded, i'll export it
 
 -- builtins
-typed.boolean = builtins.boolean
-typed.number = builtins.number
-typed.string = builtins.string
-typed["nil"] = builtins["nil"]
-typed.none = builtins.none
-typed.vector = builtins.vector
-typed.buffer = builtins.buffer
-typed["function"] = builtins["function"]
-typed.callable = builtins.callable
-typed.userdata = builtins.userdata
+typed.boolean = builtinSchemaBuilders.boolean
+typed.number = builtinSchemaBuilders.number
+typed.string = builtinSchemaBuilders.string
+typed["nil"] = builtinSchemaBuilders["nil"]
+typed.none = builtinSchemaBuilders.none
+typed.vector = builtinSchemaBuilders.vector
+typed.buffer = builtinSchemaBuilders.buffer
+typed["function"] = builtinSchemaBuilders["function"]
+typed.callable = builtinSchemaBuilders.callable
+typed.userdata = builtinSchemaBuilders.userdata
 
 -- structures
-typed.table = require("@self/schemas/structures/table")
-typed.array = require("@self/schemas/structures/array")
-typed.iterable = require("@self/schemas/structures/iterable")
+typed.table = require("@self/builders/structures/table")
+typed.array = require("@self/builders/structures/array")
+typed.iterable = require("@self/builders/structures/iterable")
 
 -- modifiers
-typed.optional = require("@self/schemas/modifiers/optional")
-typed.transform = require("@self/schemas/modifiers/transform")
+typed.optional = require("@self/builders/modifiers/optional")
+typed.transform = require("@self/builders/modifiers/transform")
 
 -- combinators
-typed.union = require("@self/schemas/combinators/union")
-typed.intersect = require("@self/schemas/combinators/intersect")
+typed.union = require("@self/builders/combinators/union")
+typed.intersect = require("@self/builders/combinators/intersect")
 
 typed.formatIssues = issue.formatIssues
 typed.formatIssue = issue.formatIssue

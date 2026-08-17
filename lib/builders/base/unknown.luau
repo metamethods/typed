@@ -1,10 +1,10 @@
 const result = require("../../result")
 const schema = require("../../schema")
 
-const function anySchema()
-	return schema<<any>>(function(value)
+const function unknownSchemaBuilder()
+	return schema<<unknown>>(function(value)
 		return result.validate.ok()
 	end)
 end
 
-return anySchema
+return unknownSchemaBuilder

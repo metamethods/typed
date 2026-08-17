@@ -29,7 +29,7 @@ type TableOptions = {
 	strict: boolean?,
 }
 
-const function tableSchema<T>(shape: T, options: TableOptions?)
+const function tableSchemaBuilder<T>(shape: T, options: TableOptions?)
 	const options: TableOptions = options or {}
 
 	const shape = shape :: { [unknown]: schema.Schema<unknown> }
@@ -91,4 +91,4 @@ const function tableSchema<T>(shape: T, options: TableOptions?)
 	end)
 end
 
-return tableSchema
+return tableSchemaBuilder

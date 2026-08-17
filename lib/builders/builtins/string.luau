@@ -10,7 +10,7 @@ type StringOptions = {
 	}?,
 }
 
-const function stringSchema(options: StringOptions?)
+const function stringSchemaBuilder(options: StringOptions?)
 	const options: StringOptions = options or {}
 
 	return primitive<<string>>("string", function(value)
@@ -42,4 +42,4 @@ const function stringSchema(options: StringOptions?)
 	end)
 end
 
-return stringSchema
+return stringSchemaBuilder

@@ -2,7 +2,7 @@ const issue = require("../../issue")
 const result = require("../../result")
 const schema = require("../../schema")
 
-const function literalSchema<T>(literal: T)
+const function literalSchemaBuilder<T>(literal: T)
 	return schema<<T>>(function(value)
 		if literal == value then
 			return result.validate.ok()
@@ -14,4 +14,4 @@ const function literalSchema<T>(literal: T)
 	end)
 end
 
-return literalSchema
+return literalSchemaBuilder

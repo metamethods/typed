@@ -8,7 +8,7 @@ type NumberOptions = {
 	max: number?,
 }
 
-const function numberSchema(options: NumberOptions?)
+const function numberSchemaBuilder(options: NumberOptions?)
 	const options: NumberOptions = options or {}
 
 	return primitive<<number>>("number", function(value)
@@ -34,4 +34,4 @@ const function numberSchema(options: NumberOptions?)
 	end)
 end
 
-return numberSchema
+return numberSchemaBuilder

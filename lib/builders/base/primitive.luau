@@ -2,7 +2,7 @@ const result = require("../../result")
 const issue = require("../../issue")
 const schema = require("../../schema")
 
-const function primitiveSchema<T>(typeName: string, validateFn: ((value: any) -> result.ValidateResult)?)
+const function primitiveSchemaBuilder<T>(typeName: string, validateFn: ((value: any) -> result.ValidateResult)?)
 	return schema<<T>>(function(value)
 		if type(value) ~= typeName then
 			return result.validate.err({
@@ -18,4 +18,4 @@ const function primitiveSchema<T>(typeName: string, validateFn: ((value: any) ->
 	end)
 end
 
-return primitiveSchema
+return primitiveSchemaBuilder
