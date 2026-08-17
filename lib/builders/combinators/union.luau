@@ -3,35 +3,46 @@ const shared = require("../../shared")
 const result = require("../../result")
 const schema = require("../../schema")
 
-const function unionSchema<T0, T1>(schemaA: T0, schemaB: T1)
-	const schemaA = schemaA :: schema.Schema<shared.infer<T0>>
-	const schemaB = schemaB :: schema.Schema<shared.infer<T1>>
+type infer<T> = shared.infer<T>
 
-	return schema<<shared.infer<T0> | shared.infer<T1>>>(function(value)
-		const validateResult0 = schemaA.validate(value)
+type function infer_union(ty: type): type
+	local resultingType: type?
 
-		if validateResult0.ok then
-			return result.validate.ok()
+	for _, ty: type in ty:parameters().head :: { type } do
+		if not resultingType then
+			resultingType = infer(ty)
+		else
+			resultingType = types.unionof(resultingType, infer(ty))
+		end
+	end
+
+	return if not resultingType then types.unknown else resultingType
+end
+
+const function unionSchema<T...>(...: T...)
+	const schemas = table.pack(... :: unknown) :: { schema.Schema<unknown> }
+
+	return schema<<infer_union<(T...) -> ()>>>(function(value)
+		local issues: { issue.ValidateIssue } = {}
+
+		for _, schema in schemas do
+			const validationResult = schema.validate(schema)
+
+			if validationResult.ok then
+				return result.validate.ok()
+			else
+				issues = shared.joinArrays(issues, validationResult.issues)
+			end
 		end
 
-		const validateResult1 = schemaB.validate(value)
-
-		if validateResult1.ok then
-			return result.validate.ok()
-		end
-
-		return result.validate.err(shared.joinArrays(validateResult0.issues, validateResult1.issues))
+		return result.validate.err(issues)
 	end, function(value)
-		const parseResult0 = schemaA.parse(value)
+		for _, schema in schemas do
+			const parseResult = schema.parse(schema)
 
-		if parseResult0.ok then
-			return parseResult0
-		end
-
-		const parseResult1 = schemaB.parse(value)
-
-		if parseResult1.ok then
-			return parseResult1
+			if parseResult.ok then
+				-- return result.parse.ok(parseResult.value :: infer_union<(T...) -> ()>)
+			end
 		end
 
 		return result.parse.err({

@@ -3,64 +3,77 @@ const shared = require("../../shared")
 const result = require("../../result")
 const schema = require("../../schema")
 
-const function intersectSchemaBuilder<T0, T1>(schemaA: T0, schemaB: T1)
-	const schemaA = schemaA :: schema.Schema<shared.infer<T0>>
-	const schemaB = schemaB :: schema.Schema<shared.infer<T1>>
+type infer<T> = shared.infer<T>
 
-	return schema<<shared.infer<T0> & shared.infer<T1>>>(function(value)
-		const validateResult0 = schemaA.validate(value)
-		const validateResult1 = schemaB.validate(value)
+type function infer_intersection(ty: type): type
+	local resultingType: type?
 
-		if validateResult0.ok and validateResult1.ok then
+	for _, ty: type in ty:parameters().head :: { type } do
+		if not resultingType then
+			resultingType = infer(ty)
+		else
+			resultingType = types.intersectionof(resultingType, infer(ty))
+		end
+	end
+
+	return if not resultingType then types.unknown else resultingType
+end
+
+const function intersectSchemaBuilder<T...>(...: T...)
+	const schemas = table.pack(... :: unknown) :: { schema.Schema<unknown> }
+
+	return schema<<infer_intersection<(T...) -> ()>>>(function(value)
+		local issues: { issue.ValidateIssue } = {}
+
+		for _, schema in schemas do
+			const validationResult = schema.validate(schema)
+
+			if not validationResult.ok then
+				issues = shared.joinArrays(issues, validationResult.issues)
+			end
+		end
+
+		if #issues == 0 then
 			return result.validate.ok()
 		end
 
-		-- they should both be an error variant at this point
-		-- guess the new luau solver is not detecting that?? lol
-		const validateResult0 = validateResult0 :: result.ValidateResultErr
-		const validateResult1 = validateResult1 :: result.ValidateResultErr
-
-		return result.validate.err(shared.joinArrays(validateResult0.issues, validateResult1.issues))
+		return result.validate.err(issues)
 	end, function(value)
-		--!todo: this probably needs a rewrite, but it should suffice for now i guess...
+		const mergingTables: { { [unknown]: unknown } } = {}
 
-		const parseResult0 = schemaA.parse(value)
+		for _, schema in schemas do
+			const parseResult = schema.parse(value)
 
-		if not parseResult0.ok then
-			return parseResult0
-		end
+			if not parseResult.ok then
+				return parseResult
+			end
 
-		const parseResult1 = schemaB.parse(value)
-
-		if not parseResult1.ok then
-			return parseResult1
-		end
-
-		if type(parseResult0.value) ~= "table" then
-			return result.parse.err({
-				issue.parse.unmergeableValue(`unable to merge value; expected table, got {typeof(parseResult0.value)}`),
-			})
-		end
-
-		if type(parseResult1.value) ~= "table" then
-			return result.parse.err({
-				issue.parse.unmergeableValue(`unable to merge value; expected table, got {typeof(parseResult1.value)}`),
-			})
-		end
-
-		const merged = parseResult0.value :: any
-
-		for key, value in parseResult1.value :: any do
-			if merged[key] then
+			if type(parseResult.value) ~= "table" then
 				return result.parse.err({
-					issue.appendContext(issue.parse.keyConflict(`key conflict with {key}`), `{key}`),
+					issue.parse.unmergeableValue(
+						`unable to merge value; expected table, got {typeof(parseResult.value)}`
+					),
 				})
 			end
 
-			merged[key] = value
+			table.insert(mergingTables, parseResult.value :: { [unknown]: unknown })
 		end
 
-		return result.parse.ok(merged)
+		const merged: { [unknown]: unknown } = {}
+
+		for _, mergingTable in mergingTables do
+			for key, value in mergingTable do
+				if merged[key] then
+					return result.parse.err({
+						issue.appendContext(issue.parse.keyConflict(`key conflict with {key}`), `{key}`),
+					})
+				end
+
+				merged[key] = value
+			end
+		end
+
+		return result.parse.ok(merged :: infer_intersection<(T...) -> ()>)
 	end)
 end
 
