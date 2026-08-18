@@ -3,7 +3,7 @@ const result = require("../../result")
 const schema = require("../../schema")
 
 const function literalSchemaBuilder<T>(literal: T)
-	return schema<<T>>(function(value)
+	return schema<<T, nil, nil>>(function(value)
 		if literal == value then
 			return result.validate.ok()
 		end

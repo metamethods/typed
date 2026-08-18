@@ -1,18 +1,29 @@
 const issue = require("./issue")
 const result = require("./result")
 
-export type Schema<T> = {
+const function schemaMeta<T, S, M, NewM>(self: Schema<T, S, M>, metadata: NewM): Schema<T, S, NewM>
+	self.metadata = metadata
+	return self
+end
+
+export type Schema<T, S = nil, M = nil> = {
 	_infer: T,
+	metadata: M,
+	shape: S,
+	meta: typeof(schemaMeta),
 	validate: (value: any) -> result.ValidateResult,
 	parse: (value: any) -> result.ParseResult<T>,
 	unwrapParse: (value: any) -> T,
 	enforce: (value: T) -> T,
 }
 
-const function schema<T>(
+export type UnknownSchema = Schema<unknown, unknown, unknown>
+
+const function schema<T, S, M>(
 	validateFn: (value: any) -> result.ValidateResult,
-	parseFn: ((value: any) -> result.ParseResult<T>)?
-): Schema<T>
+	parseFn: ((value: any) -> result.ParseResult<T>)?,
+	shape: S?
+): Schema<T, S, M>
 	const schemaValidateFn = function(value: any): result.ValidateResult
 		return validateFn(value)
 	end
@@ -34,6 +45,8 @@ const function schema<T>(
 	end
 
 	return {
+		shape = shape,
+		meta = schemaMeta,
 		validate = schemaValidateFn,
 		parse = schemaParseFn,
 		unwrapParse = function(value)
@@ -46,7 +59,7 @@ const function schema<T>(
 		enforce = function(value)
 			return value
 		end,
-	} :: Schema<T>
+	} :: Schema<T, S, M>
 end
 
 return schema

@@ -3,11 +3,8 @@ const shared = require("../../shared")
 const result = require("../../result")
 const schema = require("../../schema")
 
-const function intersectSchemaBuilder<T0, T1>(schemaA: T0, schemaB: T1)
-	const schemaA = schemaA :: schema.Schema<shared.infer<T0>>
-	const schemaB = schemaB :: schema.Schema<shared.infer<T1>>
-
-	return schema<<shared.infer<T0> & shared.infer<T1>>>(function(value)
+const function intersectSchemaBuilder<T0, T0S, T0M, T1, T1S, T1M>(schemaA: schema.Schema<T0, T0S, T0M>, schemaB: schema.Schema<T1, T1S, T1M>)
+	return schema<<T0 & T1>>(function(value)
 		const validateResult0 = schemaA.validate(value)
 		const validateResult1 = schemaB.validate(value)
 

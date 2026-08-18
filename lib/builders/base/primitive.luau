@@ -3,7 +3,7 @@ const issue = require("../../issue")
 const schema = require("../../schema")
 
 const function primitiveSchemaBuilder<T>(typeName: string, validateFn: ((value: any) -> result.ValidateResult)?)
-	return schema<<T>>(function(value)
+	return schema<<T, nil, nil>>(function(value)
 		if type(value) ~= typeName then
 			return result.validate.err({
 				issue.validate.invalidType(`expected {typeName}, got {typeof(value)}`),

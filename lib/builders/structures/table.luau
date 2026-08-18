@@ -3,38 +3,94 @@ const issue = require("../../issue")
 const schema = require("../../schema")
 const shared = require("../../shared")
 
--- so this works
--- i guess bro???
+type Schema<T, S, M> = schema.Schema<T, S, M>
+
 type infer<T> = shared.infer<T>
 
-type function infer_shape(shape: type)
-	assert(shape:is("table"), "requires a table type")
+type metadata<T> = shared.metadata<T>
 
-	const result = types.newtable()
+type shape<T> = shared.shape<T>
 
-	for key, value in shape:properties() do
+type expect_string<T> = shared.expect_string<T>
+
+type function infer_shape(tableShapeTy: type)
+	assert(tableShapeTy:is("table"), "requires a table type")
+
+	const indexer = tableShapeTy:indexer()
+
+	if indexer then
+		expect_string(indexer.index)
+	end
+
+	const resultTy = types.newtable()
+
+	for key, value in tableShapeTy:properties() do
+		expect_string(key)
+
 		if value.read then
-			result:setreadproperty(key, infer(value.read))
+			resultTy:setreadproperty(key, infer(value.read))
 		end
 
 		if value.write then
-			result:setwriteproperty(key, infer(value.write))
+			resultTy:setwriteproperty(key, infer(value.write))
 		end
 	end
 
-	return result
+	return resultTy
+end
+
+type function infer_common_schema(tableShapeTy: type)
+	assert(tableShapeTy:is("table"), "requires a table type")
+
+	local inferResultTy: type?
+	local shapeResultTy: type?
+	local metadataResultTy: type?
+
+	for _, valueTy in tableShapeTy:properties() do
+		if not valueTy.read then
+			continue
+		end
+
+		if not inferResultTy then
+			inferResultTy = infer(valueTy.read)
+		else
+			inferResultTy = types.unionof(inferResultTy, infer(valueTy.read))
+		end
+
+		if not shapeResultTy then
+			shapeResultTy = shape(valueTy.read)
+		else
+			shapeResultTy = types.unionof(shapeResultTy, shape(valueTy.read))
+		end
+
+		if not metadataResultTy then
+			metadataResultTy = metadata(valueTy.read)
+		else
+			metadataResultTy = types.unionof(metadataResultTy, metadata(valueTy.read))
+		end
+	end
+
+	return Schema(
+		if inferResultTy == nil then types.unknown else inferResultTy,
+		if shapeResultTy == nil then types.unknown else shapeResultTy,
+		if metadataResultTy == nil then types.unknown else metadataResultTy
+	)
 end
 
 type TableOptions = {
 	strict: boolean?,
 }
 
-const function tableSchemaBuilder<T>(shape: T, options: TableOptions?)
+const function tableSchemaBuilder<T>(tableShape: T, options: TableOptions?)
 	const options: TableOptions = options or {}
 
-	const shape = shape :: { [unknown]: schema.Schema<unknown> }
+	const tableShape = tableShape :: { [string]: schema.UnknownSchema }
 
-	return schema<<infer_shape<T>>>(function(value)
+	for key, _ in tableShape do
+		assert(type(key) == "string", `expected string type key, got {key} ({typeof(key)})`)
+	end
+
+	return schema<<infer_shape<T>, T & { [string]: infer_common_schema<T>? }, nil>>(function(value)
 		if type(value) ~= "table" then
 			return result.validate.err({
 				issue.validate.invalidType(`expected table, got {typeof(value)}`),
@@ -43,7 +99,7 @@ const function tableSchemaBuilder<T>(shape: T, options: TableOptions?)
 
 		const issues = {}
 
-		for key, schema in shape do
+		for key, schema in tableShape do
 			const validationResult = schema.validate(value[key])
 
 			if not validationResult.ok then
@@ -55,7 +111,7 @@ const function tableSchemaBuilder<T>(shape: T, options: TableOptions?)
 
 		if options.strict then
 			for key, _ in value do
-				if not shape[key] then
+				if not tableShape[key] then
 					table.insert(issues, issue.appendContext(issue.validate.extraKey(`extra key provided`), `{key}`))
 				end
 			end
@@ -70,7 +126,7 @@ const function tableSchemaBuilder<T>(shape: T, options: TableOptions?)
 		const newTable = {}
 		const issues = {}
 
-		for key, schema in shape do
+		for key, schema in tableShape do
 			const parseResult = schema.parse(value[key])
 
 			if parseResult.ok then
@@ -88,7 +144,7 @@ const function tableSchemaBuilder<T>(shape: T, options: TableOptions?)
 		end
 
 		return result.parse.ok(newTable :: infer_shape<T>)
-	end)
+	end, tableShape :: infer_common_schema<T>)
 end
 
 return tableSchemaBuilder
