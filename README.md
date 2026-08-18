@@ -29,7 +29,7 @@ type User = t.infer<typeof(userSchema)>
 const rawData = {
 	username = "alex",
 	age = 25,
-	email = "test@gamil.com",
+	email = "alex@example.com",
 	tags = { "admin", "developer" },
 }
 
