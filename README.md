@@ -43,3 +43,7 @@ else
 	print("failed to validate:", t.formatIssues(result.issues))
 end
 ```
+
+## learn more
+
+you can read the documentation [here](https://metamethods.github.io/typed)
