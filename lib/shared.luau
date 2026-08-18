@@ -10,7 +10,7 @@ export type function pull_type(ty: type, needle: type)
 	error(`failed to pull {needle:value()}`)
 end
 
-export type infer<T> = pull_type<T, "_infer">
+export type infer<T> = pull_type<T, "infer">
 
 export type metadata<T> = pull_type<T, "metadata">
 

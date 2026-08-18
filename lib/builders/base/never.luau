@@ -3,7 +3,7 @@ const result = require("../../result")
 const schema = require("../../schema")
 
 const function neverSchemaBuilder()
-	return schema<<never, nil, nil>>(function(value)
+	return schema<<never, nil, nil>>("never", function(value)
 		return result.validate.err({ issue.validate.invalidType(`expected never, got {typeof(value)}`) })
 	end)
 end

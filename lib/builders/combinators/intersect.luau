@@ -4,7 +4,7 @@ const result = require("../../result")
 const schema = require("../../schema")
 
 const function intersectSchemaBuilder<T0, T0S, T0M, T1, T1S, T1M>(schemaA: schema.Schema<T0, T0S, T0M>, schemaB: schema.Schema<T1, T1S, T1M>)
-	return schema<<T0 & T1>>(function(value)
+	return schema<<T0 & T1>>("intersect", function(value)
 		const validateResult0 = schemaA.validate(value)
 		const validateResult1 = schemaB.validate(value)
 

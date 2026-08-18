@@ -6,7 +6,7 @@ const function transformSchemaBuilder<T>(innerSchema: T)
 	const innerSchema = innerSchema :: schema.Schema<shared.infer<T>>
 
 	return function<R>(transformFn: (shared.infer<T>) -> R)
-		return schema<<R, nil, nil>>(function(value: shared.infer<T>)
+		return schema<<R, nil, nil>>("transform", function(value: shared.infer<T>)
 			return innerSchema.validate(value)
 		end, function(value)
 			-- the validate function should be ran before this when .parse is called

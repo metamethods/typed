@@ -4,6 +4,7 @@ const schema = require("../../schema")
 
 const function iterableSchemaBuilder<K, KS, KM, T, TS, TM>(keySchema: schema.Schema<K, KS, KM>, valueSchema: schema.Schema<T, TS, TM>)
 	return schema<<{ [K]: T? }>>(
+		"iterable",
 		function(value)
 			if type(value) ~= "table" then
 				return result.validate.err({

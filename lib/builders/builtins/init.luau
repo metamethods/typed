@@ -1,7 +1,7 @@
 const schema = require("../schema")
 const primitive = require("./base/primitive")
 
-const function primitiveSchemaBuilderFn<T>(typeName: string): () -> schema.Schema<T>
+const function primitiveSchemaBuilderFn<T>(typeName: schema.SchemaType): () -> schema.Schema<T>
 	return function()
 		return primitive<<T>>(typeName)
 	end

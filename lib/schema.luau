@@ -6,8 +6,28 @@ const function schemaMeta<T, S, M, NewM>(self: Schema<T, S, M>, metadata: NewM):
 	return self
 end
 
+export type SchemaType =
+	"table"
+	| "iterable"
+	| "transform"
+	| "union"
+	| "intersect"
+	| "string"
+	| "number"
+	| "boolean"
+	| "nil"
+	| "vector"
+	| "buffer"
+	| "function"
+	| "userdata"
+	| "unknown"
+	| "never"
+	| "any"
+	| "literal"
+
 export type Schema<T, S = nil, M = nil> = {
-	_infer: T,
+	type: SchemaType,
+	infer: T,
 	metadata: M,
 	shape: S,
 	meta: typeof(schemaMeta),
@@ -20,6 +40,7 @@ export type Schema<T, S = nil, M = nil> = {
 export type UnknownSchema = Schema<unknown, unknown, unknown>
 
 const function schema<T, S, M>(
+	type: SchemaType,
 	validateFn: (value: any) -> result.ValidateResult,
 	parseFn: ((value: any) -> result.ParseResult<T>)?,
 	shape: S?
@@ -45,6 +66,7 @@ const function schema<T, S, M>(
 	end
 
 	return {
+		type = type,
 		shape = shape,
 		meta = schemaMeta,
 		validate = schemaValidateFn,
