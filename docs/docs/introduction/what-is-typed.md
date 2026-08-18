@@ -51,7 +51,7 @@ If `rawData` is missing `username`, or `age` is `17`, or `email` doesn't look li
 
 typed is made of small set of composable parts.
 
-- **Base schemas** - `t.any`, `t.literal`, `t.is`
+- **Base schemas** - `t.any`, `t.unknown`, `t.never`, `t.literal`, `t.is`
 - **Builtins** - `t.boolean`, `t.number`, `t.string`, `t.none`, `t.vector`, `t.buffer`, `t.callable`, `t.userdata`
 - **Structures** - `t.table`, `t.array`, `t.iterable`
 - **Modifiers** - `t.optional`, `t.transform`

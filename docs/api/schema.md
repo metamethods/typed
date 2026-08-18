@@ -5,8 +5,12 @@ Everything in `typed` -- `t.string()`, `t.table({ ... })`, `t.union(a, b)`, and 
 ## The Schema Type
 
 ```luau
-export type Schema<T> = {
-    _infer: T,
+export type Schema<T, S = nil, M = nil> = {
+    type: SchemaType,
+    infer: T,
+   	metadata: M,
+    shape: S,
+    meta: <T, S, M, NewM>(self: Schema<T, S, M>, metadata: NewM) -> Schema<T, S, NewM>,
     validate: (value: any) -> ValidateResult,
     parse: (value: any) -> ParseResult<T>,
     unwrapParse: (value: any) -> T,
@@ -14,7 +18,54 @@ export type Schema<T> = {
 }
 ```
 
-`T` is the type the schema describes. `_infer` exists so `T` can live under it which enables `t.infer<typeof(schema)>` to be able to pull out a type.
+- `T` is the generated type the schema creates when you build our your schemas.
+- `S` is the shape the schema defines. Currently it is only used in the table schema.
+- `M` is the metadata the schema defines.
+
+## `:meta(metadata)`
+
+Set metadata for the selected schema.
+
+```luau
+const formSchema = t.table({
+    cardNumber = t.string():meta({
+        name = "Card Number",
+        description = "The card number you want to use to purchase"
+    }),
+    cvc = t.number():meta({
+        name = "CVC",
+        description = "Security code to your card"
+    })
+})
+```
+
+Library authors that use typed to create things, like the example above, can pull out the data by iterating through the shape field thats attached on the schema object. Take this for example:
+
+```luau
+const function createForm(formSchema: t.Schema<
+    any,
+    { [string]: t.Schema<string | number, any, { name: string, description: string }> }
+>)
+    for key, field in formSchema.shape do
+        print(key, `type: {field.type}`, `name: {field.metadata.name}`, `description: {field.metadata.description}`)
+    end
+end
+
+createForm(formSchema)
+```
+
+This prints the following if you ran the code:
+
+```txt
+cvc type: number	name: CVC	description: Security code to your card
+cardNumber  type: string	name: Card Number	description: The card number you want to use to purchase
+```
+
+Of course, you can also use the normal validation methods thats listed below to validate and parse data with the same schema.
+
+::: caution
+Currently it directly modifies the schema you are targeting; it does not create a new schema with the metadata you have provided for it hence the reason why it is the only method that uses `:` (colon) syntax instead of `.` (dot) syntax.
+:::
 
 ## `.validate(value)`
 
@@ -39,7 +90,7 @@ Notice how a successful validation carries **no value**, only `{ ok = true }`. O
 :::
 
 ::: caution
-Do not trust the original value after calling `.validate`, since some schemas may implement transformable schemas (e.g `t.transform`) and can change the schema's resulting type. Instead use `.parse` to be on the safer side.
+Do not trust the original value after calling `.validate`, since some schemas may implement transformable schemas (e.g `t.transform`) and can change the schema's resulting type. Unless you are sure there isnt one in your schema, use `.parse` to be on the safer side.
 :::
 
 ## `.parse(value)`
