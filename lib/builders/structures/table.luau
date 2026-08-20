@@ -40,11 +40,7 @@ type function infer_shape(tableShapeTy: type)
 		expect_string(key)
 
 		if value.read then
-			resultTy:setreadproperty(key, infer(value.read))
-		end
-
-		if value.write then
-			resultTy:setwriteproperty(key, infer(value.write))
+			resultTy:setproperty(key, infer(value.read))
 		end
 	end
 
