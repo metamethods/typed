@@ -35,7 +35,7 @@ const function tableSchemaBuilder<T>(tableShape: T, options: TableOptions?)
 		assert(type(key) == "string", `expected string type key, got {key} ({typeof(key)})`)
 	end
 
-	return schema<<{} & infer_shape<T>, T>>("table", function(value)
+	return schema<<{} & infer_shape<T>, T & { [string]: schema.UnknownSchema? }>>("table", function(value)
 		if type(value) ~= "table" then
 			return result.parse.err({
 				issue.parse.invalidType(`expected table, got {typeof(value)}`),
