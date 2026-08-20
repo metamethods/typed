@@ -30,75 +30,58 @@ function issue.formatIssues(issues: { Issue }): string
 	return table.concat(formattedIssues, "\n")
 end
 
-issue.validate = {}
+issue.parse = {}
 
-export type ValidateIssueType = "invalid_type" | "invalid_length" | "invalid_match" | "invalid_value" | "extra_key"
+export type ParseIssueType =
+	| "refine_error"
+	| "invalid_value"
+	| "invalid_type"
+	| "invalid_union"
+	| "missing_data"
+	| "extra_key"
+	| "unmergeable_value"
+	| "key_conflict"
 
-export type ValidateIssue = Issue<ValidateIssueType>
+export type ParseIssue = Issue<ParseIssueType>
 
-function issue.validate.invalidType(message: string): ValidateIssue
+function issue.parse.refineError(message: string): ParseIssue
 	return {
-		type = "invalid_type",
+		type = "refine_error",
 		message = message,
 	}
 end
 
-function issue.validate.invalidLength(message: string): ValidateIssue
-	return {
-		type = "invalid_length",
-		message = message,
-	}
-end
-
-function issue.validate.invalidMatch(message: string): ValidateIssue
-	return {
-		type = "invalid_match",
-		message = message,
-	}
-end
-
-function issue.validate.invalidValue(message: string): ValidateIssue
+function issue.parse.invalidValue(message: string): ParseIssue
 	return {
 		type = "invalid_value",
 		message = message,
 	}
 end
 
-function issue.validate.extraKey(message: string): ValidateIssue
+function issue.parse.invalidType(message: string): ParseIssue
 	return {
-		type = "extra_key",
+		type = "invalid_type",
 		message = message,
 	}
 end
 
-issue.parse = {}
-
-export type ParseIssueType =
-	"failed_to_parse"
-	| "validate_failed"
-	| "missing_data"
-	| "unmergeable_value"
-	| "key_conflict"
-
-export type ParseIssue = Issue<ParseIssueType>
-
-function issue.parse.failedToParse(message: string): ParseIssue
+function issue.parse.invalidUnion(message: string): ParseIssue
 	return {
-		type = "failed_to_parse",
+		type = "invalid_union",
 		message = message,
-	}
-end
-
-function issue.parse.validateFailed(validateIssue: { ValidateIssue }): ParseIssue
-	return {
-		type = "validate_failed",
-		message = issue.formatIssues(validateIssue),
 	}
 end
 
 function issue.parse.missingData(message: string): ParseIssue
 	return {
 		type = "missing_data",
+		message = message,
+	}
+end
+
+function issue.parse.extraKey(message: string): ParseIssue
+	return {
+		type = "extra_key",
 		message = message,
 	}
 end

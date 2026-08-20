@@ -2,9 +2,9 @@ const issue = require("../../issue")
 const result = require("../../result")
 local schema = require("../../schema")
 
-const function isSchemaBuilder<T>(typeName: string)
+const function likeSchemaBuilder<T>(typeName: string)
 	return schema<<T, nil>>("is", function(value)
-		if typeof(value) ~= typeName then
+		if type(value) ~= typeName then
 			return result.parse.err({
 				issue.parse.invalidType(`expected {typeName}, got {typeof(value)}.`),
 			})
@@ -14,4 +14,4 @@ const function isSchemaBuilder<T>(typeName: string)
 	end)
 end
 
-return isSchemaBuilder
+return likeSchemaBuilder

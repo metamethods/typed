@@ -6,82 +6,38 @@ const function schemaMeta<T, S, M, NewM>(self: Schema<T, S, M>, metadata: NewM):
 	return self
 end
 
-export type SchemaType =
-	"table"
-	| "iterable"
-	| "transform"
-	| "union"
-	| "intersect"
-	| "string"
-	| "number"
-	| "boolean"
-	| "nil"
-	| "vector"
-	| "buffer"
-	| "function"
-	| "userdata"
-	| "unknown"
-	| "never"
-	| "any"
-	| "literal"
-
 export type Schema<T, S = nil, M = nil> = {
-	type: SchemaType,
+	type: string,
 	infer: T,
 	metadata: M,
 	shape: S,
 	meta: typeof(schemaMeta),
-	validate: (value: any) -> result.ValidateResult,
 	parse: (value: any) -> result.ParseResult<T>,
 	unwrapParse: (value: any) -> T,
-	enforce: (value: T) -> T,
+	cast: (value: T) -> T,
 }
 
 export type UnknownSchema = Schema<unknown, unknown, unknown>
 
-const function schema<T, S>(
-	type: SchemaType,
-	validateFn: (value: any) -> result.ValidateResult,
-	parseFn: ((value: any) -> result.ParseResult<T>)?,
-	shape: S?
-)
-	const schemaValidateFn = function(value: any): result.ValidateResult
-		return validateFn(value)
-	end
+export type AnySchema = Schema<any, any, any>
 
-	const schemaParseFn = function(value: any): result.ParseResult<T>
-		const validateResult = schemaValidateFn(value)
-
-		if not validateResult.ok then
-			return result.parse.err({
-				issue.parse.validateFailed(validateResult.issues),
-			})
-		end
-
-		if parseFn then
-			return parseFn(value)
-		else
-			return result.parse.ok(value)
-		end
-	end
-
+const function schema<T, S>(type: string, parse: (value: any) -> result.ParseResult<T>, shape: S?)
 	return {
 		type = type,
 		shape = shape,
 		meta = schemaMeta,
-		validate = schemaValidateFn,
-		parse = schemaParseFn,
+		parse = parse,
 		unwrapParse = function(value)
-			const parseResult = schemaParseFn(value)
+			const parseResult = parse(value)
 			if not parseResult.ok then
 				error(issue.formatIssues(parseResult.issues))
 			end
 			return parseResult.value
 		end,
-		enforce = function(value)
+		cast = function(value)
 			return value
 		end,
-	} :: Schema<T, S, nil>
+	} :: Schema<T, S>
 end
 
 return schema

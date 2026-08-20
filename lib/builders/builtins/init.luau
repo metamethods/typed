@@ -1,33 +1,33 @@
 const schema = require("../schema")
-const primitive = require("./base/primitive")
+const like = require("./base/like")
 
-const function primitiveSchemaBuilderFn<T>(typeName: schema.SchemaType): () -> schema.Schema<T>
+const function builtinSchemaBuilder<T>(typeName: string): () -> schema.Schema<T>
 	return function()
-		return primitive<<T>>(typeName)
+		return like<<T>>(typeName)
 	end
 end
 
-const primitives = {}
+const builtins = {}
 
-primitives.boolean = primitiveSchemaBuilderFn<<boolean>>("boolean")
+builtins.boolean = builtinSchemaBuilder<<boolean>>("boolean")
 
-primitives.number = require("@self/number")
+builtins.number = require("@self/number")
 
-primitives.string = require("@self/string")
+builtins.string = require("@self/string")
 
-primitives["nil"] = primitiveSchemaBuilderFn<<nil>>("nil")
-primitives.none = primitives["nil"]
+builtins["nil"] = builtinSchemaBuilder<<nil>>("nil")
+builtins.none = builtins["nil"]
 
-primitives.vector = primitiveSchemaBuilderFn<<vector>>("vector")
+builtins.vector = builtinSchemaBuilder<<vector>>("vector")
 
-primitives.buffer = primitiveSchemaBuilderFn<<Buffer>>("buffer")
+builtins.buffer = builtinSchemaBuilder<<Buffer>>("buffer")
 
-primitives["function"] = primitiveSchemaBuilderFn<<(...any) -> ...any>>("function")
-primitives.callable = primitives["function"]
+builtins["function"] = builtinSchemaBuilder<<(...any) -> ...any>>("function")
+builtins.callable = builtins["function"]
 
 -- there isnt a type definition for userdata in luau
 -- im just gonna keep it as unknown until there is a
 -- type definition i can use for it
-primitives.userdata = primitiveSchemaBuilderFn<<unknown>>("userdata")
+builtins.userdata = builtinSchemaBuilder<<unknown>>("userdata")
 
-return primitives
+return builtins

@@ -3,7 +3,7 @@ const schema = require("../../schema")
 
 const function anySchemaBuilder()
 	return schema<<any, nil>>("any", function(value)
-		return result.validate.ok()
+		return result.parse.ok(value)
 	end)
 end
 

@@ -7,16 +7,16 @@ const function iterableSchemaBuilder<K, KS, KM, T, TS, TM>(keySchema: schema.Sch
 		"iterable",
 		function(value)
 			if type(value) ~= "table" then
-				return result.validate.err({
-					issue.validate.invalidType(`expected table, got {typeof(value)}`),
+				return result.parse.err({
+					issue.parse.invalidType(`expected table, got {typeof(value)}`),
 				})
 			end
 
 			const issues = {}
 
 			for index, value in value do
-				const keyValidateResult = keySchema.validate(index)
-				const valueValidateResult = valueSchema.validate(value)
+				const keyValidateResult = keySchema.parse(index)
+				const valueValidateResult = valueSchema.parse(value)
 
 				if keyValidateResult.ok and valueValidateResult.ok then
 					continue
@@ -24,24 +24,23 @@ const function iterableSchemaBuilder<K, KS, KM, T, TS, TM>(keySchema: schema.Sch
 
 				if not keyValidateResult.ok then
 					for _, validationIssue in keyValidateResult.issues do
-						table.insert(issues, issue.appendContext(validationIssue, `at index {index}'s key`))
+						table.insert(issues, issue.appendContext(validationIssue, `at index {index}: key`))
 					end
 				end
 
 				if not valueValidateResult.ok then
 					for _, validationIssue in valueValidateResult.issues do
-						table.insert(issues, issue.appendContext(validationIssue, `at index {index}'s value`))
+						table.insert(issues, issue.appendContext(validationIssue, `at index {index}: value`))
 					end
 				end
 			end
 
 			if #issues > 0 then
-				return result.validate.err(issues)
+				return result.parse.err(issues)
 			end
 
-			return result.validate.ok()
+			return result.parse.ok(value)
 		end,
-		nil,
 		{
 			key = keySchema,
 			value = valueSchema,

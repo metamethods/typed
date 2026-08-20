@@ -4,13 +4,13 @@ const schema = require("../../schema")
 
 const function literalSchemaBuilder<T>(literal: T)
 	return schema<<T, nil>>("literal", function(value)
-		if literal == value then
-			return result.validate.ok()
+		if value ~= literal then
+			return result.parse.err({
+				issue.parse.invalidValue(`expected {literal}, got {value}`),
+			})
 		end
 
-		return result.validate.err({
-			issue.validate.invalidValue(`expected ({typeof(literal)}) {literal}, got ({typeof(value)}) {value}`),
-		})
+		return result.parse.ok(value :: T)
 	end)
 end
 

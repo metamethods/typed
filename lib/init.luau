@@ -45,7 +45,11 @@ export type infer<T> = shared.infer<T>
 
 export type Schema<T, S = nil, M = nil> = schema.Schema<T, S, M>
 
-export type ValidateResult = result.ValidateResult
+export type UnknownSchema = schema.UnknownSchema
+
+export type AnySchema = schema.AnySchema
+
+export type SchemaShape<S, M = any> = schema.Schema<any, S, M>
 
 export type ParseResult<T> = result.ParseResult<T>
 
