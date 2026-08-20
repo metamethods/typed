@@ -1,20 +1,8 @@
-export type function pull_type(ty: type, needle: type)
-	assert(ty:is("table"), "requires a table type")
+export type infer<T> = index<T, "infer">
 
-	for key, value in ty:properties() do
-		if key:is("singleton") and key == needle and value.read then
-			return value.read
-		end
-	end
+export type metadata<T> = index<T, "metadata">
 
-	error(`failed to pull {needle:value()}`)
-end
-
-export type infer<T> = pull_type<T, "infer">
-
-export type metadata<T> = pull_type<T, "metadata">
-
-export type shape<T> = pull_type<T, "shape">
+export type shape<T> = index<T, "shape">
 
 export type function expect_string(ty: type)
 	assert(not ty:is("intersection"), "intersection type is not allowed")
