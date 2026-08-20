@@ -11,7 +11,19 @@ type metadata<T> = shared.metadata<T>
 
 type shape<T> = shared.shape<T>
 
-type expect_string<T> = shared.expect_string<T>
+export type function expect_string(ty: type)
+	assert(not ty:is("intersection"), "intersection type is not allowed")
+
+	if ty:is("union") then
+		for _, componentTy in ty:components() do
+			expect_string(componentTy)
+		end
+	else
+		assert(ty:issubtypeof(types.string), `expected string, got {ty.tag}`)
+	end
+
+	return ty
+end
 
 type function infer_shape(tableShapeTy: type)
 	assert(tableShapeTy:is("table"), "requires a table type")
