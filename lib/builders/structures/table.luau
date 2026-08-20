@@ -51,23 +51,13 @@ type function infer_common_schema(tableShapeTy: type)
 			continue
 		end
 
-		if not inferResultTy then
-			inferResultTy = infer(valueTy.read)
-		else
-			inferResultTy = types.unionof(inferResultTy, infer(valueTy.read))
-		end
+		const readValueTy = valueTy.read
 
-		if not shapeResultTy then
-			shapeResultTy = shape(valueTy.read)
-		else
-			shapeResultTy = types.unionof(shapeResultTy, shape(valueTy.read))
-		end
-
-		if not metadataResultTy then
-			metadataResultTy = metadata(valueTy.read)
-		else
-			metadataResultTy = types.unionof(metadataResultTy, metadata(valueTy.read))
-		end
+		inferResultTy = if inferResultTy then types.unionof(infer(readValueTy), inferResultTy) else infer(readValueTy)
+		shapeResultTy = if shapeResultTy then types.unionof(shape(readValueTy), shapeResultTy) else shape(readValueTy)
+		metadataResultTy = if metadataResultTy
+			then types.unionof(metadata(readValueTy), metadataResultTy)
+			else metadata(readValueTy)
 	end
 
 	return Schema(
