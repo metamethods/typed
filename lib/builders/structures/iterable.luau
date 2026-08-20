@@ -3,7 +3,7 @@ const issue = require("../../issue")
 const schema = require("../../schema")
 
 const function iterableSchemaBuilder<K, KS, KM, T, TS, TM>(keySchema: schema.Schema<K, KS, KM>, valueSchema: schema.Schema<T, TS, TM>)
-	return schema<<{ [K]: T? }>>(
+	return schema<<{ [K]: T? }, { key: schema.Schema<K, KS, KM>, value: schema.Schema<T, TS, TM> }>>(
 		"iterable",
 		function(value)
 			if type(value) ~= "table" then

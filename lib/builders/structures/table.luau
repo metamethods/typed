@@ -88,7 +88,7 @@ const function tableSchemaBuilder<T>(tableShape: T, options: TableOptions?)
 		assert(type(key) == "string", `expected string type key, got {key} ({typeof(key)})`)
 	end
 
-	return schema<<infer_shape<T>, T & { [string]: infer_common_schema<T>? }, nil>>("table", function(value)
+	return schema<<infer_shape<T>, T & { [string]: infer_common_schema<T>? }>>("table", function(value)
 		if type(value) ~= "table" then
 			return result.validate.err({
 				issue.validate.invalidType(`expected table, got {typeof(value)}`),

@@ -1,12 +1,9 @@
 const result = require("../../result")
-const shared = require("../../shared")
 const schema = require("../../schema")
 
-const function transformSchemaBuilder<T>(innerSchema: T)
-	const innerSchema = innerSchema :: schema.Schema<shared.infer<T>>
-
-	return function<R>(transformFn: (shared.infer<T>) -> R)
-		return schema<<R, nil, nil>>("transform", function(value: shared.infer<T>)
+const function transformSchemaBuilder<T, S, M>(innerSchema: schema.Schema<T, S, M>)
+	return function<R>(transformFn: (T) -> R)
+		return schema<<R, nil>>("transform", function(value: T)
 			return innerSchema.validate(value)
 		end, function(value)
 			-- the validate function should be ran before this when .parse is called

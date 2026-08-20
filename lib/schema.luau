@@ -39,12 +39,12 @@ export type Schema<T, S = nil, M = nil> = {
 
 export type UnknownSchema = Schema<unknown, unknown, unknown>
 
-const function schema<T, S, M>(
+const function schema<T, S>(
 	type: SchemaType,
 	validateFn: (value: any) -> result.ValidateResult,
 	parseFn: ((value: any) -> result.ParseResult<T>)?,
 	shape: S?
-): Schema<T, S, M>
+)
 	const schemaValidateFn = function(value: any): result.ValidateResult
 		return validateFn(value)
 	end
@@ -81,7 +81,7 @@ const function schema<T, S, M>(
 		enforce = function(value)
 			return value
 		end,
-	} :: Schema<T, S, M>
+	} :: Schema<T, S, nil>
 end
 
 return schema
