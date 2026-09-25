@@ -12,7 +12,8 @@ const t = require("typed")
 t.any()
 t.unknown()
 t.never()
-t.literal("typed")
+t.literal<<"typed">>("typed")
+t.literals<<"typed" | "is" | "cool">>("typed", "is", "cool")
 t.is<<string>>("string")
 t.refine(t.string())(function() ... end)
 t.meta(t.string(), "hello world")
@@ -80,16 +81,30 @@ t.never().parse("terrible") -- fail, invalid_type issue
 Do note that `t.never()` will never have a value that will pass validation; it will always return an `invalid_type` issue
 :::
 
-## Literal
+## Literal and Literals
 
 `t.literal()` checks a value against a single exact value, using `==`.
 
 ```luau
-local schema = t.literal("typed")
+local schema = t.literal<<"typed">>("typed")
 
 schema.parse("typed") -- pass
 schema.parse("yped") -- fail (value does not equal "typed")
 ```
+
+If you want to check against multiple literals, you can use `t.literals()` instead.
+
+```luau
+local schema = t.literals<<"typed" | "is" | "cool">>("typed", "is", "cool")
+
+schema.parse("typed") -- pass
+schema.parse("is") -- pass
+schema.parse("terrible") -- fail (does not exist in the defined literals above)
+```
+
+::: note
+Due to type widening, without using generic instantiation, it will infer the schema to be a `string` instead of your more narrow type of `"typed" | "is" | "cool"`. There isn't a way--at the moment--to disable this widening property, so you will need to manually use generic instantation in order to get more narrow types upon parsing the schema. If you don't really care about it being widen to a `string` type, then, uhh.. ignore this lol
+:::
 
 ## Is
 
