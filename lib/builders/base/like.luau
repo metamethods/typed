@@ -10,7 +10,7 @@ const function likeSchemaBuilder<T>(typeName: string)
 			})
 		end
 
-		return result.parse.ok(value :: T)
+		return result.parse.ok(value)
 	end)
 end
 

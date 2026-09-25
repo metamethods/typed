@@ -1,8 +1,8 @@
-const schema = require("../../schema")
 const optional = require("./optional")
 const transform = require("./transform")
+const shared = require("../../shared")
 
-const function defaultSchemaBuilder<T, S, M>(sourceSchema: schema.Schema<T, S, M>, defaultValue: T)
+const function defaultSchemaBuilder<S>(sourceSchema: S, defaultValue: shared.infer<S>)
 	return transform(optional(sourceSchema))(function(value)
 		if value == nil then
 			return defaultValue

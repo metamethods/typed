@@ -1,17 +1,24 @@
 const result = require("../../result")
 const schema = require("../../schema")
+const shared = require("../../shared")
 
-const function transformSchemaBuilder<T, S, M>(sourceSchema: schema.Schema<T, S, M>)
-	return function<R>(transformFn: (T) -> R)
-		return schema.createSchema<<R, schema.InnerSchema<S, M>>>("transform", function(value)
-			const sourceSchemaParseResult = sourceSchema.parse(value)
+const function transformSchemaBuilder<S>(sourceSchema: S)
+	return function<R>(transform: (shared.infer<S>) -> R)
+		return schema.createSchema<<R, schema.InnerSchema<shared.shape<S>, shared.metadata<S>>>>(
+			"transform",
+			function(value)
+				const sourceSchema: schema.AnySchema = sourceSchema
 
-			if not sourceSchemaParseResult.ok then
-				return sourceSchemaParseResult
-			end
+				const sourceSchemaParseResult = sourceSchema.parse(value)
 
-			return result.parse.ok(transformFn(sourceSchemaParseResult.value))
-		end, schema.innerSchema(sourceSchema))
+				if not sourceSchemaParseResult.ok then
+					return sourceSchemaParseResult
+				end
+
+				return result.parse.ok(transform(sourceSchemaParseResult.value))
+			end,
+			schema.innerSchema(sourceSchema)
+		)
 	end
 end
 

@@ -1,8 +1,7 @@
-const schema = require("../../schema")
 const builtins = require("../builtins")
 const iterable = require("./iterable")
 
-const function arraySchemaBuilder<T, S, M>(valueSchema: schema.Schema<T, S, M>)
+const function arraySchemaBuilder<S>(valueSchema: S)
 	return iterable(builtins.number(), valueSchema)
 end
 

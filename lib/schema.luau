@@ -1,3 +1,4 @@
+local shared = require(script.Parent.shared)
 const issue = require("./issue")
 const result = require("./result")
 
@@ -39,7 +40,9 @@ const function createSchema<T, S>(type: string, parse: (value: any) -> result.Pa
 	} :: Schema<T, S>
 end
 
-const function innerSchema<T, S, M>(sourceSchema: Schema<T, S, M>): InnerSchema<S, M>
+const function innerSchema<S>(sourceSchema: S): InnerSchema<shared.shape<S>, shared.metadata<S>>
+	const sourceSchema: AnySchema = sourceSchema
+
 	return {
 		type = sourceSchema.type,
 		metadata = sourceSchema.metadata,
