@@ -19,4 +19,4 @@ jobs:
 
       - uses: CompeyDev/setup-rokit@v0.2.1
       - name: Publish Wally
-        run: wally publish --token "${{ secrets.WALLY_TOKEN }}"
+        run: wally login --token "${{ secrets.WALLY_TOKEN }}" && wally publish
