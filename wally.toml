@@ -1,0 +1,9 @@
+[package]
+name = "metamethods/typed"
+version = "0.8.2"
+license = "MIT"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+exclude = ["docs", ".github"]
+
+[dependencies]
