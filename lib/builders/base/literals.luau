@@ -23,24 +23,21 @@ const function literalsSchemaBuilder<T>(...: T)
 		acceptedLiterals[index] = formatForOutput(literal)
 	end
 
-	return schema.createSchema<<T, nil>>(
-		"literals",
-		function(value)
-			for index = 1, literals.n do
-				local literal = literals[index]
+	return schema.createSchema<<T, nil>>("literals", function(value)
+		for index = 1, literals.n do
+			local literal = literals[index]
 
-				if value == literal then
-					return result.parse.ok(value :: T)
-				end
+			if value == literal then
+				return result.parse.ok(value :: T)
 			end
-
-			return result.parse.err({
-				issue.parse.invalidValue(
-					`expected one of literal values ({table.concat(acceptedLiterals, ", ")}), got {formatForOutput(value)}`
-				),
-			})
 		end
-	)
+
+		return result.parse.err({
+			issue.parse.invalidValue(
+				`expected one of literal values ({table.concat(acceptedLiterals, ", ")}), got {formatForOutput(value)}`
+			),
+		})
+	end)
 end
 
 return literalsSchemaBuilder
