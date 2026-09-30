@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - "v*"
+      - "*@*"
 
 permissions:
   contents: write
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: CompeyDev/setup-rokit@v0.2.1
       - run: lute scripts/prepare.luau
-      - run: lute scripts/build.luau
+      - run: lute scripts/build.luau "${GITHUB_REF_NAME%@*}"
       - uses: softprops/action-gh-release@v3
         with:
           name: typed ${{ github.ref_name }}
