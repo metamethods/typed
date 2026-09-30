@@ -9,6 +9,8 @@ type RefineResult<T> = {
 }
 
 const function refineSchemaBuilder<S>(sourceSchema: S)
+	const sourceSchema: schema.SchemaFromGeneric<S> = sourceSchema
+
 	return function(refineFn: (
 		value: shared.infer<S>,
 		result: RefineResult<shared.infer<S>>
@@ -16,8 +18,6 @@ const function refineSchemaBuilder<S>(sourceSchema: S)
 		return schema.createSchema<<shared.infer<S>, schema.InnerSchema<shared.shape<S>, shared.metadata<S>>>>(
 			"refine",
 			function(value)
-				const sourceSchema: schema.AnySchema = sourceSchema
-
 				const sourceSchemaParseResult = sourceSchema.parse(value)
 
 				if not sourceSchemaParseResult.ok then
@@ -35,7 +35,8 @@ const function refineSchemaBuilder<S>(sourceSchema: S)
 					end,
 				})
 			end,
-			schema.innerSchema(sourceSchema)
+			schema.innerSchema(sourceSchema),
+			sourceSchema.metadata
 		)
 	end
 end

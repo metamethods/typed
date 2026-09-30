@@ -7,9 +7,9 @@ const function iterableSchemaBuilder<SK, SV>(keySchema: SK, valueSchema: SV)
 	return schema.createSchema<<{ [shared.infer<SK>]: shared.infer<SV>? }, {
 		key: schema.InnerSchema<shared.shape<SK>, shared.metadata<SK>>,
 		value: schema.InnerSchema<shared.shape<SV>, shared.metadata<SV>>,
-	}>>("iterable", function(value)
-		const keySchema: schema.AnySchema = keySchema
-		const valueSchema: schema.AnySchema = valueSchema
+	}, nil>>("iterable", function(value)
+		const keySchema: schema.SchemaFromGeneric<SK> = keySchema
+		const valueSchema: schema.SchemaFromGeneric<SV> = valueSchema
 
 		if type(value) ~= "table" then
 			return result.parse.err({

@@ -1,4 +1,4 @@
-local shared = require(script.Parent.shared)
+local shared = require("./shared")
 const issue = require("./issue")
 const result = require("./result")
 
@@ -22,10 +22,13 @@ export type UnknownSchema = Schema<unknown, unknown, unknown>
 
 export type AnySchema = Schema<any, any, any>
 
-const function createSchema<T, S>(type: string, parse: (value: any) -> result.ParseResult<T>, shape: S?)
+export type SchemaFromGeneric<S> = Schema<shared.infer<S>, shared.shape<S>, shared.metadata<S>>
+
+const function createSchema<T, S, M>(type: string, parse: (value: any) -> result.ParseResult<T>, shape: S, metadata: M)
 	return {
 		type = type,
 		shape = shape,
+		metadata = metadata,
 		parse = parse,
 		unwrapParse = function(value)
 			const parseResult = parse(value)
@@ -41,7 +44,7 @@ const function createSchema<T, S>(type: string, parse: (value: any) -> result.Pa
 end
 
 const function innerSchema<S>(sourceSchema: S): InnerSchema<shared.shape<S>, shared.metadata<S>>
-	const sourceSchema: AnySchema = sourceSchema
+	const sourceSchema: SchemaFromGeneric<S> = sourceSchema
 
 	return {
 		type = sourceSchema.type,

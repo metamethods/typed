@@ -85,7 +85,7 @@ const function tableSchemaBuilder<T>(fields: T, options: TableOptions?)
 		shape[key] = schema.innerSchema(valueSchema)
 	end
 
-	return schema.createSchema<<infer_from_fields<T>, shape_from_fields<T>>>("table", function(value)
+	return schema.createSchema<<infer_from_fields<T>, shape_from_fields<T>, nil>>("table", function(value)
 		if type(value) ~= "table" then
 			return result.parse.err({
 				issue.parse.invalidType(`expected table, got {typeof(value)}`),

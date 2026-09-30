@@ -23,7 +23,7 @@ const function literalsSchemaBuilder<T>(...: T)
 		acceptedLiterals[index] = formatForOutput(literal)
 	end
 
-	return schema.createSchema<<T, nil>>("literals", function(value)
+	return schema.createSchema<<T, nil, nil>>("literals", function(value)
 		for index = 1, literals.n do
 			local literal = literals[index]
 

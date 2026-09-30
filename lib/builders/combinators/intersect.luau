@@ -7,9 +7,9 @@ const function intersectSchemaBuilder<SA, SB>(sourceSchemaA: SA, sourceSchemaB: 
 	return schema.createSchema<<shared.infer<SA> & shared.infer<SB>, {
 		left: schema.InnerSchema<shared.shape<SA>, shared.metadata<SA>>,
 		right: schema.InnerSchema<shared.shape<SB>, shared.metadata<SB>>,
-	}>>("intersect", function(value)
-		const sourceSchemaA: schema.AnySchema = sourceSchemaA
-		const sourceSchemaB: schema.AnySchema = sourceSchemaB
+	}, nil>>("intersect", function(value)
+		const sourceSchemaA: schema.SchemaFromGeneric<SA> = sourceSchemaA
+		const sourceSchemaB: schema.SchemaFromGeneric<SB> = sourceSchemaB
 
 		const parseResult0 = sourceSchemaA.parse(value)
 

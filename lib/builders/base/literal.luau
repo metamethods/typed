@@ -3,7 +3,7 @@ const result = require("../../result")
 const schema = require("../../schema")
 
 const function literalSchemaBuilder<T>(literal: T)
-	return schema.createSchema<<T, nil>>("literal", function(value)
+	return schema.createSchema<<T, nil, nil>>("literal", function(value)
 		if value ~= literal then
 			return result.parse.err({
 				issue.parse.invalidValue(`expected {literal}, got {value}`),

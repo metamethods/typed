@@ -6,9 +6,9 @@ const function unionSchema<SA, SB>(sourceSchemaA: SA, sourceSchemaB: SB)
 	return schema.createSchema<<shared.infer<SA> | shared.infer<SB>, {
 		left: schema.InnerSchema<shared.shape<SA>, shared.metadata<SA>>,
 		right: schema.InnerSchema<shared.shape<SB>, shared.metadata<SB>>,
-	}>>("union", function(value)
-		const sourceSchemaA: schema.AnySchema = sourceSchemaA
-		const sourceSchemaB: schema.AnySchema = sourceSchemaB
+	}, nil>>("union", function(value)
+		const sourceSchemaA: schema.SchemaFromGeneric<SA> = sourceSchemaA
+		const sourceSchemaB: schema.SchemaFromGeneric<SB> = sourceSchemaB
 
 		const parseResult0 = sourceSchemaA.parse(value)
 
