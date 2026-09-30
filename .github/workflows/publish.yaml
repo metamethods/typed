@@ -16,7 +16,3 @@ jobs:
 
       - name: Publish Pesde
         run: pesde auth login --token "${{ secrets.PESDE_TOKEN }}" && pesde publish --yes
-
-      - uses: CompeyDev/setup-rokit@v0.2.1
-      - name: Publish Wally
-        run: wally login --token "${{ secrets.WALLY_TOKEN }}" && wally publish
