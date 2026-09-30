@@ -1,9 +1,6 @@
 {
   "name": "typed",
   "tree": {
-    "$path": "lib",
-    "luau_packages": {
-      "$path": "luau_packages"
-    }
+    "$path": "lib"
   }
 }
