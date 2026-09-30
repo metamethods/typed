@@ -3,7 +3,7 @@ const process = require("@lute/process")
 
 const PACKAGES_DIRECTORY = `./packages`
 
-const packageToBuild = process.args[1]
+const packageToBuild = process.args[2]
 
 for _, packageDirectoryEntry in fs.listdir(PACKAGES_DIRECTORY) do
 	if packageDirectoryEntry.type ~= "dir" then
