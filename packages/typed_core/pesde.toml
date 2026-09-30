@@ -1,5 +1,9 @@
 name = "metamethods/typed_core"
 version = "0.1.0"
+description = "core library for all typed packages"
+authors = ["metamethods"]
+repository = "https://github.com/metamethods/typed"
+license = "MIT"
 includes = [
   "pesde.toml",
   "README.md",

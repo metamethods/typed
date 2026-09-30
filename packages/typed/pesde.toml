@@ -1,5 +1,9 @@
 name = "metamethods/typed"
 version = "0.8.4"
+description = "luau runtime type validation library"
+authors = ["metamethods"]
+repository = "https://github.com/metamethods/typed"
+license = "MIT"
 includes = [
   "pesde.toml",
   "README.md",
