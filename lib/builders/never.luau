@@ -1,6 +1,6 @@
-const issue = require("../../issue")
-const result = require("../../result")
-const schema = require("../../schema")
+const issue = require("../issue")
+const result = require("../result")
+const schema = require("../schema")
 
 const function neverSchemaBuilder()
 	return schema.createSchema<<never, nil, nil>>("never", function(value)

@@ -1,6 +1,6 @@
-const issue = require("../../issue")
-const result = require("../../result")
-const schema = require("../../schema")
+const issue = require("../issue")
+const result = require("../result")
+const schema = require("../schema")
 
 const function formatForOutput(value: any?): string
 	if value == nil then

@@ -1,6 +1,6 @@
-const issue = require("../../issue")
-const result = require("../../result")
-const schema = require("../../schema")
+const issue = require("../issue")
+const result = require("../result")
+const schema = require("../schema")
 
 const function literalSchemaBuilder<T>(literal: T)
 	return schema.createSchema<<T, nil, nil>>("literal", function(value)

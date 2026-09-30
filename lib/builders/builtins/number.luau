@@ -1,5 +1,5 @@
-const like = require("../base/like")
-const refine = require("../base/refine")
+const like = require("../like")
+const refine = require("../refine")
 
 type NumberOptions = {
 	unbounded: boolean?,

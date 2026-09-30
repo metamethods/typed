@@ -7,14 +7,14 @@ local shared = require("@self/shared")
 local typed = {}
 
 -- base
-typed.any = require("@self/builders/base/any")
-typed.unknown = require("@self/builders/base/unknown")
-typed.never = require("@self/builders/base/never")
-typed.literal = require("@self/builders/base/literal")
-typed.literals = require("@self/builders/base/literals")
-typed.is = require("@self/builders/base/is")
-typed.refine = require("@self/builders/base/refine")
-typed.meta = require("@self/builders/base/meta")
+typed.any = require("@self/builders/any")
+typed.unknown = require("@self/builders/unknown")
+typed.never = require("@self/builders/never")
+typed.literal = require("@self/builders/literal")
+typed.literals = require("@self/builders/literals")
+typed.is = require("@self/builders/is")
+typed.refine = require("@self/builders/refine")
+typed.meta = require("@self/builders/meta")
 
 -- builtins
 typed.boolean = builtinSchemaBuilders.boolean

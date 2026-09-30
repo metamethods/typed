@@ -1,5 +1,5 @@
 const schema = require("../schema")
-const like = require("./base/like")
+const like = require("./like")
 
 const function builtinSchemaBuilder<T>(typeName: string): () -> schema.Schema<T>
 	return function()

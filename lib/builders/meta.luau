@@ -1,5 +1,5 @@
-const schema = require("../../schema")
-const shared = require("../../shared")
+const schema = require("../schema")
+const shared = require("../shared")
 
 const function metaSchemaBuilder<S, NewM>(sourceSchema: S, metadata: NewM): schema.Schema<shared.infer<S>, shared.shape<S>, NewM>
 	const sourceSchema: schema.SchemaFromGeneric<S> = sourceSchema

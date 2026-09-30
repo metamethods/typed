@@ -1,7 +1,7 @@
-const issue = require("../../issue")
-const result = require("../../result")
-const schema = require("../../schema")
-const shared = require("../../shared")
+const issue = require("../issue")
+const result = require("../result")
+const schema = require("../schema")
+const shared = require("../shared")
 
 type RefineResult<T> = {
 	ok: () -> result.ParseResultOk<T>,

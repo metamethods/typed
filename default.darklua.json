@@ -1,0 +1,12 @@
+{
+  "generator": "retain_lines",
+  "rules": [
+    {
+      "rule": "inject_global_value",
+      "identifier": "FLAG_ROBLOX",
+      "value": false
+    },
+    "remove_unused_if_branch",
+    "remove_nil_declarations"
+  ]
+}
