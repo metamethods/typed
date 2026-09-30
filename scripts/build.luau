@@ -37,7 +37,8 @@ for _, packageDirectoryEntry in fs.listdir(PACKAGES_DIRECTORY) do
 		process.exit(1)
 	else
 		print(result.stdout)
+		process.exit(0)
 	end
-
-	break
 end
+
+process.exit(1)
