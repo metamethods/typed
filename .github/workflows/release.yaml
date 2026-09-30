@@ -1,24 +1,25 @@
 name: release
 
 on:
-    push:
-        tags:
-            - "v*"
+  push:
+    tags:
+      - "v*"
 
 permissions:
-    contents: write
+  contents: write
 
 jobs:
-    release:
-        name: release
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
-            - uses: CompeyDev/setup-rokit@v0.2.1
-            - run: rojo build --output typed.rbxm
-            - uses: softprops/action-gh-release@v3
-              with:
-                  name: typed ${{ github.ref_name }}
-                  generate_release_notes: true
-                  draft: true
-                  files: typed.rbxm
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: CompeyDev/setup-rokit@v0.2.1
+      - run: lute scripts/prepare.luau
+      - run: lute scripts/build.luau
+      - uses: softprops/action-gh-release@v3
+        with:
+          name: typed ${{ github.ref_name }}
+          generate_release_notes: true
+          draft: true
+          files: *.rbxm

@@ -1,0 +1,18 @@
+name = "metamethods/typed"
+version = "0.8.3"
+includes = [
+  "pesde.toml",
+  "README.md",
+  "LICENSE",
+  "lib/**/*.luau",
+]
+
+[dependencies]
+typed_core = { workspace = "metamethods/typed_core", version = "^" }
+
+[target]
+environment = "luau"
+lib = "lib/init.luau"
+
+[indices]
+default = "https://github.com/pesde-pkg/index"

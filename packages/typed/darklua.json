@@ -1,0 +1,17 @@
+{
+  "generator": "retain_lines",
+  "loaders": {
+    "**/luau_packages/*": "skip",
+    "**/darklua.json": "skip"
+  },
+  "rules": [
+    {
+      "rule": "convert_require",
+      "current": {
+        "name": "luau",
+        "use_luau_configuration": true
+      },
+      "target": "luau"
+    }
+  ]
+}

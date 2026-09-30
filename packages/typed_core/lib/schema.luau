@@ -1,0 +1,64 @@
+const parseIssue = require("./parseIssue")
+const parseResult = require("./parseResult")
+
+export type InnerSchema<S = nil, M = nil> = {
+	type: string,
+	shape: S,
+	metadata: M,
+}
+
+export type Schema<T, S = nil, M = nil> = {
+	type: string,
+	infer: T,
+	shape: S,
+	metadata: M,
+	parse: (value: any) -> parseResult.ParseResult<T>,
+	unwrapParse: (value: any) -> T,
+	cast: (value: T) -> T,
+}
+
+export type infer<T> = index<T, "infer">
+
+export type metadata<T> = index<T, "metadata">
+
+export type shape<T> = index<T, "shape">
+
+export type UnknownSchema = Schema<unknown, unknown, unknown>
+
+export type AnySchema = Schema<any, any, any>
+
+export type SchemaFromGeneric<S> = Schema<infer<S>, shape<S>, metadata<S>>
+
+const function createSchema<T, S, M>(type: string, parse: (value: any) -> parseResult.ParseResult<T>, shape: S, metadata: M)
+	return {
+		type = type,
+		shape = shape,
+		metadata = metadata,
+		parse = parse,
+		unwrapParse = function(value)
+			const parseResult = parse(value)
+			if not parseResult.ok then
+				error(parseIssue.formatIssues(parseResult.issues))
+			end
+			return parseResult.value
+		end,
+		cast = function(value)
+			return value
+		end,
+	} :: Schema<T, S>
+end
+
+const function innerSchema<S>(sourceSchema: S): InnerSchema<shape<S>, metadata<S>>
+	const sourceSchema: SchemaFromGeneric<S> = sourceSchema
+
+	return {
+		type = sourceSchema.type,
+		metadata = sourceSchema.metadata,
+		shape = sourceSchema.shape,
+	}
+end
+
+return {
+	createSchema = createSchema,
+	innerSchema = innerSchema,
+}
