@@ -1,6 +1,6 @@
 {
   "aliases": {
     "packages": "./luau_packages",
-    "builders": "./src/builders"
+    "builders": "./lib/builders"
   }
 }
