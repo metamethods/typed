@@ -1,13 +1,10 @@
 {
-    "languageMode": "strict",
-    "globals": [
-        "FLAG_LUAU"
-    ],
-    "aliases": {
-      "lib": "./lib",
-      "builders": "./lib/builders"
-    },
-    "lint": {
-        "LocalShadow": false
-    }
+  "languageMode": "strict",
+  "aliases": {
+    "lib": "./lib",
+    "builders": "./lib/builders"
+  },
+  "lint": {
+    "LocalShadow": false
+  }
 }
