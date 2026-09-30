@@ -24,3 +24,4 @@ jobs:
           draft: true
           files: |
             *.rbxm
+          fail_on_unmatched_files: true

@@ -5,6 +5,8 @@ const PACKAGES_DIRECTORY = `./packages`
 
 const packageToBuild = process.args[2]
 
+print("building packge", packageToBuild)
+
 for _, packageDirectoryEntry in fs.listdir(PACKAGES_DIRECTORY) do
 	if packageDirectoryEntry.type ~= "dir" then
 		continue
@@ -42,3 +44,4 @@ for _, packageDirectoryEntry in fs.listdir(PACKAGES_DIRECTORY) do
 end
 
 process.exit(1)
+print("no package was found for", packageToBuild)
