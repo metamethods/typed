@@ -19,7 +19,7 @@ jobs:
       - run: lute scripts/build.luau "${GITHUB_REF_NAME%@*}"
       - uses: softprops/action-gh-release@v3
         with:
-          name: typed ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
           generate_release_notes: true
           draft: true
           files: |
