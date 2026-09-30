@@ -1,5 +1,5 @@
-const like = require("../like")
-const refine = require("../refine")
+const like = require("@builders/like")
+const refine = require("@builders/refine")
 
 type StringOptions = {
 	match: string?,

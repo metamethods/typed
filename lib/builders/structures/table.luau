@@ -1,7 +1,7 @@
-const result = require("../../result")
-const issue = require("../../issue")
-const schema = require("../../schema")
-const shared = require("../../shared")
+const result = require("@lib/result")
+const issue = require("@lib/issue")
+const schema = require("@lib/schema")
+const shared = require("@lib/shared")
 
 type Schema<T, S, M> = schema.Schema<T, S, M>
 

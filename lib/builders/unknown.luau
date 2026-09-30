@@ -1,5 +1,5 @@
-const result = require("../result")
-const schema = require("../schema")
+const result = require("@lib/result")
+const schema = require("@lib/schema")
 
 const function unknownSchemaBuilder()
 	return schema.createSchema<<unknown, nil, nil>>("unknown", function(value)

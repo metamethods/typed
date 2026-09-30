@@ -1,7 +1,7 @@
-const result = require("../../result")
-const issue = require("../../issue")
-const schema = require("../../schema")
-const shared = require("../../shared")
+const result = require("@lib/result")
+const issue = require("@lib/issue")
+const schema = require("@lib/schema")
+const shared = require("@lib/shared")
 
 const function iterableSchemaBuilder<SK, SV>(keySchema: SK, valueSchema: SV)
 	return schema.createSchema<<{ [shared.infer<SK>]: shared.infer<SV>? }, {

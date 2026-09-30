@@ -1,6 +1,6 @@
-const issue = require("../issue")
-const result = require("../result")
-local schema = require("../schema")
+const issue = require("@lib/issue")
+const result = require("@lib/result")
+local schema = require("@lib/schema")
 
 const function isSchemaBuilder<T>(typeName: string)
 	return schema.createSchema<<T, nil, nil>>("is", function(value)

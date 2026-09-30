@@ -1,8 +1,8 @@
-const builtins = require("../builtins")
-const union = require("../combinators/union")
+const none = require("@builders/none")
+const union = require("@builders/combinators/union")
 
 const function optionalSchemaBuilder<S>(innerSchema: S)
-	return union(innerSchema, builtins.none())
+	return union(innerSchema, none())
 end
 
 return optionalSchemaBuilder

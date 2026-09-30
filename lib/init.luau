@@ -1,12 +1,12 @@
-local builtinSchemaBuilders = require("@self/builders/builtins")
 local issue = require("@self/issue")
+local luauSchemaBuilders = require("@self/builders/luau")
 local result = require("@self/result")
 local schema = require("@self/schema")
 local shared = require("@self/shared")
 
 local typed = {}
 
--- base
+-- core
 typed.any = require("@self/builders/any")
 typed.unknown = require("@self/builders/unknown")
 typed.never = require("@self/builders/never")
@@ -15,32 +15,31 @@ typed.literals = require("@self/builders/literals")
 typed.is = require("@self/builders/is")
 typed.refine = require("@self/builders/refine")
 typed.meta = require("@self/builders/meta")
+typed.none = require("@self/builders/none")
+typed["nil"] = typed.none
 
--- builtins
-typed.boolean = builtinSchemaBuilders.boolean
-typed.number = builtinSchemaBuilders.number
-typed.string = builtinSchemaBuilders.string
-typed["nil"] = builtinSchemaBuilders["nil"]
-typed.none = builtinSchemaBuilders.none
-typed.vector = builtinSchemaBuilders.vector
-typed.buffer = builtinSchemaBuilders.buffer
-typed["function"] = builtinSchemaBuilders["function"]
-typed.callable = builtinSchemaBuilders.callable
-typed.userdata = builtinSchemaBuilders.userdata
-
--- structures
 typed.table = require("@self/builders/structures/table")
 typed.array = require("@self/builders/structures/array")
 typed.iterable = require("@self/builders/structures/iterable")
 
--- modifiers
 typed.optional = require("@self/builders/modifiers/optional")
 typed.transform = require("@self/builders/modifiers/transform")
 typed.default = require("@self/builders/modifiers/default")
 
--- combinators
 typed.union = require("@self/builders/combinators/union")
 typed.intersect = require("@self/builders/combinators/intersect")
+
+-- luau
+typed.boolean = luauSchemaBuilders.boolean
+typed.number = luauSchemaBuilders.number
+typed.string = luauSchemaBuilders.string
+typed.vector = luauSchemaBuilders.vector
+typed.buffer = luauSchemaBuilders.buffer
+typed["function"] = luauSchemaBuilders["function"]
+typed.callable = luauSchemaBuilders.callable
+typed.userdata = luauSchemaBuilders.userdata
+
+-- roblox
 
 typed.formatIssues = issue.formatIssues
 typed.formatIssue = issue.formatIssue

@@ -1,6 +1,6 @@
-const result = require("../../result")
-const schema = require("../../schema")
-const shared = require("../../shared")
+const result = require("@lib/result")
+const schema = require("@lib/schema")
+const shared = require("@lib/shared")
 
 const function unionSchema<SA, SB>(sourceSchemaA: SA, sourceSchemaB: SB)
 	return schema.createSchema<<shared.infer<SA> | shared.infer<SB>, {
