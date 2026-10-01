@@ -1,8 +1,7 @@
 {
   "generator": "retain_lines",
   "loaders": {
-    "**/luau_packages/*": "skip",
-    "**/darklua.json": "skip"
+    "**/luau_packages/**/*.luau": "skip"
   },
   "rules": [
     {

@@ -17,14 +17,11 @@ jobs:
       - uses: CompeyDev/setup-rokit@v0.2.1
       - uses: lumin-org/setup-pesde@v0.4.1
       - run: pesde install
-      - run: lute scripts/prebuild.luau "${GITHUB_REF_NAME%@*}"
-      - run: lute scripts/prepare.luau
       - run: lute scripts/build.luau "${GITHUB_REF_NAME%@*}"
       - uses: softprops/action-gh-release@v3
         with:
           name: ${{ github.ref_name }}
           generate_release_notes: true
           draft: true
-          files: |
-            *.rbxm
+          files: "*.rbxm"
           fail_on_unmatched_files: true

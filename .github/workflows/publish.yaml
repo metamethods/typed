@@ -14,5 +14,5 @@ jobs:
       - uses: CompeyDev/setup-rokit@v0.2.1
       - uses: lumin-org/setup-pesde@v0.4.1
       - run: pesde install
-      - run: lute scripts/prepare.luau
-      - run: pesde auth login --token "${{ secrets.PESDE_TOKEN }}" && pesde publish --yes
+      - run: pesde auth login --token "${{ secrets.PESDE_TOKEN }}"
+      - run: lute scripts/publish.luau

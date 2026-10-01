@@ -1,47 +1,44 @@
 const fs = require("@lute/fs")
 const process = require("@lute/process")
-
-const PACKAGES_DIRECTORY = `./packages`
+const lib = require("./lib")
 
 const packageToBuild = process.args[2]
 
-print("building packge", packageToBuild)
+const packageDirectoryPath = lib.getCheckedPackageDirectoryPathFromName(packageToBuild)
 
-for _, packageDirectoryEntry in fs.listdir(PACKAGES_DIRECTORY) do
-	if packageDirectoryEntry.type ~= "dir" then
-		continue
+assert(packageDirectoryPath, `expected for an existing package directory`)
+
+const rojoProjectConfigPath = `{packageDirectoryPath}/default.project.json`
+
+assert(fs.exists(rojoProjectConfigPath), "expected package directory to have a default.project.json")
+
+const ok, errorString = lib.stage(packageDirectoryPath, function(stagingDirectoryPath)
+	const luauPackagesPath = `{stagingDirectoryPath}/luau_packages`
+	const libPath = `{stagingDirectoryPath}/lib`
+	const darkluaConfigPath = `{stagingDirectoryPath}/darklua.json`
+	const luaurcConfigPath = `{stagingDirectoryPath}/.luaurc`
+
+	if fs.exists(luauPackagesPath) then
+		lib.mustRun({
+			"mv",
+			luauPackagesPath,
+			libPath,
+		})
+
+		lib.mustRun(
+			`sed -i "" 's#"packages": "./luau_packages"#"packages": "./lib/luau_packages"#' "{luaurcConfigPath}"`
+		)
 	end
 
-	if packageDirectoryEntry.name ~= packageToBuild then
-		continue
-	end
+	lib.darkluaProcess(libPath, darkluaConfigPath)
 
-	const packageDirectoryPath = `{PACKAGES_DIRECTORY}/{packageDirectoryEntry.name}`
-	const rojoProjectConfigPath = `{packageDirectoryPath}/default.project.json`
-
-	if not fs.exists(rojoProjectConfigPath) then
-		continue
-	end
-
-	print("building", packageDirectoryPath)
-
-	const result = process.run({
+	lib.mustRun({
 		"rojo",
 		"build",
-		packageDirectoryPath,
+		stagingDirectoryPath,
 		"--output",
-		`{packageDirectoryEntry.name}.rbxm`,
+		`{packageToBuild}.rbxm`,
 	})
+end)
 
-	if not result.ok then
-		print(`failed to run rojo build command with exit code {result.exitcode}`)
-		print(result.stderr)
-		process.exit(1)
-	else
-		print(result.stdout)
-		process.exit(0)
-	end
-end
-
-process.exit(1)
-print("no package was found for", packageToBuild)
+assert(ok, errorString)
