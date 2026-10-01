@@ -25,9 +25,7 @@ const ok, errorString = lib.stage(packageDirectoryPath, function(stagingDirector
 			libPath,
 		})
 
-		lib.mustRun(
-			`sed -i "" 's#"packages": "./luau_packages"#"packages": "./lib/luau_packages"#' "{luaurcConfigPath}"`
-		)
+		lib.mustRun(`sed -i 's#"packages": "./luau_packages"#"packages": "./lib/luau_packages"#' "{luaurcConfigPath}"`)
 	end
 
 	lib.darkluaProcess(libPath, darkluaConfigPath)
