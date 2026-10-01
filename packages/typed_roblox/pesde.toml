@@ -11,8 +11,8 @@ includes = [
   "lib/**/*.luau",
 ]
 
-[dependencies]
-typed_core = { workspace = "metamethods/typed_core", version = "^" }
+[peer_dependencies]
+typed_core = { workspace = "metamethods/typed_core", version = "^0.1.0" }
 
 [target]
 environment = "luau"

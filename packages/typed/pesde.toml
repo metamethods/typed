@@ -1,5 +1,5 @@
 name = "metamethods/typed"
-version = "0.8.4"
+version = "0.9.0"
 description = "luau runtime type validation library"
 authors = ["metamethods"]
 repository = "https://github.com/metamethods/typed"
@@ -11,8 +11,8 @@ includes = [
   "lib/**/*.luau",
 ]
 
-[dependencies]
-typed_core = { workspace = "metamethods/typed_core", version = "^" }
+[peer_dependencies]
+typed_core = { workspace = "metamethods/typed_core", version = "^0.1.0" }
 
 [target]
 environment = "luau"
