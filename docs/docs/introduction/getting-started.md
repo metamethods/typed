@@ -7,7 +7,7 @@ typed can be installed either by grabbing the rbxm from [Github Releases](https:
 ::: code-group
 
 ```sh [pesde]
-$ pesde add metamethods/typed
+$ pesde add metamethods/typed metamethods/typed_core
 ```
 
 :::
