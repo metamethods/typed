@@ -63,6 +63,7 @@ const function darkluaProcess(targetPath: string, darkluaConfigFilePath: string)
 end
 
 return {
+	PACKAGES_DIRECTORY_PATH = PACKAGES_DIRECTORY_PATH,
 	mustRun = mustRun,
 	getCheckedPackageDirectoryPathFromName = getCheckedPackageDirectoryPathFromName,
 	stage = stage,
