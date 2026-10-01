@@ -46,7 +46,7 @@ const function stage(directoryPath: string, callback: (stagingFilePath: string) 
 
 	const ok, errorString = pcall(callback, stagingDirectoryPath)
 
-	mustRun({ "rm", "-rf", stagingDirectoryPath })
+	-- mustRun({ "rm", "-rf", stagingDirectoryPath })
 
 	return ok, errorString :: string
 end

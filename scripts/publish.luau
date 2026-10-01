@@ -12,9 +12,13 @@ for _, packageDirectoryEntry in fs.listdir(lib.PACKAGES_DIRECTORY_PATH) do
 				lib.darkluaProcess(libPath, darkluaConfigPath)
 			end
 
-			lib.mustRun(`cd {stagingDirectoryPath} && pesde publish --yes && cd -`)
+			-- lib.mustRun(`cd {stagingDirectoryPath} && pesde publish --yes && cd -`)
 		end
 	)
+
+	-- make stage function return a close method and go though each folder and run pesde publish --yes
+	-- need to do above steps first before publishing so pesde can actually find the
+	-- staged workspace memebrs in .staging before i can call pesde publish
 
 	assert(ok, errorString)
 end

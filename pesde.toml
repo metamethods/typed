@@ -2,7 +2,7 @@ name = "metamethods/root"
 version = "0.0.0"
 private = true
 
-workspace_members = ["packages/*"]
+workspace_members = ["packages/*", ".staging/*"]
 
 [target]
 environment = "luau"
