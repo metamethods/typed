@@ -1,0 +1,22 @@
+name = "metamethods/typed_roblox"
+version = "0.1.0"
+description = "luau runtime type validation library focused on roblox"
+authors = ["metamethods"]
+repository = "https://github.com/metamethods/typed"
+license = "MIT"
+includes = [
+  "pesde.toml",
+  "README.md",
+  "LICENSE",
+  "lib/**/*.luau",
+]
+
+[dependencies]
+typed_core = { workspace = "metamethods/typed_core", version = "^" }
+
+[target]
+environment = "luau"
+lib = "lib/init.luau"
+
+[indices]
+default = "https://github.com/pesde-pkg/index"

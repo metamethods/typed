@@ -1,0 +1,3 @@
+const typedRoblox = {}
+
+return typedRoblox
