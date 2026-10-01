@@ -1,4 +1,5 @@
 const process = require("@lute/process")
+const fs = require("@lute/fs")
 const lib = require("./lib")
 
 const packageToBuild = process.args[2]
@@ -11,7 +12,9 @@ const ok, errorString = lib.stage(packageDirectoryPath, function(stagingDirector
 	const libPath = `{stagingDirectoryPath}/lib`
 	const darkluaConfigPath = `{stagingDirectoryPath}/darklua.json`
 
-	lib.darkluaProcess(libPath, darkluaConfigPath)
+	if fs.exists(darkluaConfigPath) then
+		lib.darkluaProcess(libPath, darkluaConfigPath)
+	end
 
 	lib.mustRun(`cd {stagingDirectoryPath} && pesde publish --yes`)
 end)
