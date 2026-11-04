@@ -9,6 +9,7 @@ license = "MIT"
 [target]
 environment = "luau"
 main = "lib/init.luau"
+includes = ["README.md", "LICENSE", "lib/**/*"]
 
 [dev-dependencies]
 engine = { workspace = "typed/engine", version = "^0.1.0" }

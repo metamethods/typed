@@ -9,3 +9,4 @@ license = "MIT"
 [target]
 environment = "luau"
 main = "lib/init.luau"
+includes = ["README.md", "LICENSE", "lib/**/*"]
