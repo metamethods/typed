@@ -1,0 +1,11 @@
+[package]
+name = "typed/engine"
+version = "0.1.0"
+description = "underlying engine of typed"
+authors = ["metamethods"]
+repository = "https://github.com/metamethods/typed"
+license = "MIT"
+
+[target]
+environment = "luau"
+main = "lib/init.luau"

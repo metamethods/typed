@@ -1,0 +1,17 @@
+[package]
+name = "typed/core"
+version = "0.9.1"
+description = "luau runtime type validation library"
+authors = ["metamethods"]
+repository = "https://github.com/metamethods/typed"
+license = "MIT"
+
+[target]
+environment = "luau"
+main = "lib/init.luau"
+
+[dev-dependencies]
+engine = { workspace = "typed/engine", version = "^0.1.0" }
+
+[peer-dependencies]
+engine = { workspace = "typed/engine", version = "^0.1.0" }

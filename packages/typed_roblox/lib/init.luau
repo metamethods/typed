@@ -1,3 +1,0 @@
-const typedRoblox = {}
-
-return typedRoblox

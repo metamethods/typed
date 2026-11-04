@@ -13,3 +13,4 @@ sourcemap.json
 /docs/package-lock.json
 
 .DS_Store
+.ember-patch/

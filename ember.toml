@@ -1,0 +1,8 @@
+[package]
+name = "typed/root"
+version = "0.0.0"
+private = true
+
+[target]
+environment = "luau"
+workspace = ["packages/*"]
