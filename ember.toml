@@ -5,4 +5,4 @@ private = true
 
 [target]
 environment = "luau"
-workspace = ["packages/*"]
+workspace = ["packages/*", ".staging/*"]
