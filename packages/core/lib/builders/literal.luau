@@ -1,14 +1,14 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function literalSchemaBuilder<T>(literal: T)
-	return core.schema.createSchema<<T, nil, nil>>("literal", function(value)
+	return engine.schema.createSchema<<T, nil, nil>>("literal", function(value)
 		if value ~= literal then
-			return core.parseResult.err({
-				core.parseIssue.create("invalid_value", `expected {literal}, got {value}`),
+			return engine.parseResult.err({
+				engine.parseIssue.create("invalid_value", `expected {literal}, got {value}`),
 			})
 		end
 
-		return core.parseResult.ok(value :: T)
+		return engine.parseResult.ok(value :: T)
 	end)
 end
 

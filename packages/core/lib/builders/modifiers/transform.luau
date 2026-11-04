@@ -1,13 +1,13 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function transformSchemaBuilder<S>(sourceSchema: S)
-	const sourceSchema: core.SchemaFromGeneric<S> = sourceSchema
+	const sourceSchema: engine.SchemaFromGeneric<S> = sourceSchema
 
-	return function<R>(transform: (core.infer<S>) -> R)
-		return core.schema.createSchema<<R, core.InnerSchema<core.shape<S>, core.metadata<S>>>>(
+	return function<R>(transform: (engine.infer<S>) -> R)
+		return engine.schema.createSchema<<R, engine.InnerSchema<engine.shape<S>, engine.metadata<S>>>>(
 			"transform",
 			function(value)
-				const sourceSchema: core.SchemaFromGeneric<S> = sourceSchema
+				const sourceSchema: engine.SchemaFromGeneric<S> = sourceSchema
 
 				const sourceSchemaParseResult = sourceSchema.parse(value)
 
@@ -15,9 +15,9 @@ const function transformSchemaBuilder<S>(sourceSchema: S)
 					return sourceSchemaParseResult
 				end
 
-				return core.parseResult.ok(transform(sourceSchemaParseResult.value))
+				return engine.parseResult.ok(transform(sourceSchemaParseResult.value))
 			end,
-			core.schema.innerSchema(sourceSchema),
+			engine.schema.innerSchema(sourceSchema),
 			sourceSchema.metadata
 		)
 	end

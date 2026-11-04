@@ -1,7 +1,7 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 const like = require("./like")
 
-const function builtinSchemaBuilder<T>(typeName: string): () -> core.Schema<T>
+const function builtinSchemaBuilder<T>(typeName: string): () -> engine.Schema<T>
 	return function()
 		return like<<T>>(typeName)
 	end

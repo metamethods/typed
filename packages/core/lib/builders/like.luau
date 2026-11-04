@@ -1,14 +1,14 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function likeSchemaBuilder<T>(typeName: string)
-	return core.schema.createSchema<<T, nil, nil>>("is", function(value)
+	return engine.schema.createSchema<<T, nil, nil>>("is", function(value)
 		if type(value) ~= typeName then
-			return core.parseResult.err({
-				core.parseIssue.create("invalid_type", `expected {typeName}, got {typeof(value)}.`),
+			return engine.parseResult.err({
+				engine.parseIssue.create("invalid_type", `expected {typeName}, got {typeof(value)}.`),
 			})
 		end
 
-		return core.parseResult.ok(value)
+		return engine.parseResult.ok(value)
 	end)
 end
 

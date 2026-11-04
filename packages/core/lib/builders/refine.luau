@@ -1,18 +1,18 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 type RefineResult<T> = {
-	ok: () -> core.ParseResultOk<T>,
-	err: (message: string) -> core.ParseResultErr,
+	ok: () -> engine.ParseResultOk<T>,
+	err: (message: string) -> engine.ParseResultErr,
 }
 
 const function refineSchemaBuilder<S>(sourceSchema: S)
-	const sourceSchema: core.SchemaFromGeneric<S> = sourceSchema
+	const sourceSchema: engine.SchemaFromGeneric<S> = sourceSchema
 
 	return function(refineFn: (
-		value: core.infer<S>,
-		result: RefineResult<core.infer<S>>
-	) -> core.ParseResult<core.infer<S>>)
-		return core.schema.createSchema<<core.infer<S>, core.InnerSchema<core.shape<S>, core.metadata<S>>>>(
+		value: engine.infer<S>,
+		result: RefineResult<engine.infer<S>>
+	) -> engine.ParseResult<engine.infer<S>>)
+		return engine.schema.createSchema<<engine.infer<S>, engine.InnerSchema<engine.shape<S>, engine.metadata<S>>>>(
 			"refine",
 			function(value)
 				const sourceSchemaParseResult = sourceSchema.parse(value)
@@ -23,16 +23,16 @@ const function refineSchemaBuilder<S>(sourceSchema: S)
 
 				return refineFn(sourceSchemaParseResult.value, {
 					ok = function()
-						return core.parseResult.ok(sourceSchemaParseResult.value)
+						return engine.parseResult.ok(sourceSchemaParseResult.value)
 					end,
 					err = function(message)
-						return core.parseResult.err({
-							core.parseIssue.create("refine_error", message),
+						return engine.parseResult.err({
+							engine.parseIssue.create("refine_error", message),
 						})
 					end,
 				})
 			end,
-			core.schema.innerSchema(sourceSchema),
+			engine.schema.innerSchema(sourceSchema),
 			sourceSchema.metadata
 		)
 	end

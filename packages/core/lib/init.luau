@@ -1,5 +1,5 @@
 local primitiveSchemaBuilders = require("@builders/primitives")
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 local typed = {}
 
@@ -36,19 +36,19 @@ typed.default = require("@builders/modifiers/default")
 typed.union = require("@builders/combinators/union")
 typed.intersect = require("@builders/combinators/intersect")
 
-typed.formatIssues = core.parseIssue.formatIssues
-typed.formatIssue = core.parseIssue.formatIssue
+typed.formatIssues = engine.parseIssue.formatIssues
+typed.formatIssue = engine.parseIssue.formatIssue
 
-export type infer<T> = core.infer<T>
+export type infer<T> = engine.infer<T>
 
-export type shape<T> = core.shape<T>
+export type shape<T> = engine.shape<T>
 
-export type metadata<T> = core.metadata<T>
+export type metadata<T> = engine.metadata<T>
 
-export type Schema<T, S = nil, M = nil> = core.Schema<T, S, M>
+export type Schema<T, S = nil, M = nil> = engine.Schema<T, S, M>
 
-export type ParseResult<T> = core.ParseResult<T>
+export type ParseResult<T> = engine.ParseResult<T>
 
-export type ParseIssue = core.ParseIssue
+export type ParseIssue = engine.ParseIssue
 
 return typed

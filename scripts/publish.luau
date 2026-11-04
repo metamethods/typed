@@ -1,24 +1,23 @@
-const fs = require("@lute/fs")
+const packages = require("./packages")
+const paths = require("./paths")
+const steps = require("./steps")
 const lib = require("./lib")
 
-for _, packageDirectoryEntry in fs.listdir(lib.PACKAGES_DIRECTORY_PATH) do
-	const ok, errorString = lib.stage(
-		`{lib.PACKAGES_DIRECTORY_PATH}/{packageDirectoryEntry.name}`,
-		function(stagingDirectoryPath)
-			const libPath = `{stagingDirectoryPath}/lib`
-			const darkluaConfigPath = `{stagingDirectoryPath}/darklua.json`
+const indexedPackages = packages.getPackages(paths.PACKAGES_DIR)
+const stagedPackages = packages.stagePackages(paths.STAGING_DIR, indexedPackages)
 
-			if fs.exists(darkluaConfigPath) then
-				lib.darkluaProcess(libPath, darkluaConfigPath)
-			end
+steps.runSteps(stagedPackages, {
+	packages.darkluaTransformStep,
+	function(package: packages.StagedPackage)
+		print("publish:", package.name)
 
-			-- lib.mustRun(`cd {stagingDirectoryPath} && pesde publish --yes && cd -`)
+		const result = lib.run("embr", { "publish" }, {
+			mustRun = false,
+			cwd = package.path,
+		})
+
+		if not result.ok then
+			warn("publish:", package.name, "failed to publish; skipping")
 		end
-	)
-
-	-- make stage function return a close method and go though each folder and run pesde publish --yes
-	-- need to do above steps first before publishing so pesde can actually find the
-	-- staged workspace memebrs in .staging before i can call pesde publish
-
-	assert(ok, errorString)
-end
+	end,
+})

@@ -1,8 +1,8 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function unknownSchemaBuilder()
-	return core.schema.createSchema<<unknown, nil, nil>>("unknown", function(value)
-		return core.parseResult.ok(value)
+	return engine.schema.createSchema<<unknown, nil, nil>>("unknown", function(value)
+		return engine.parseResult.ok(value)
 	end)
 end
 

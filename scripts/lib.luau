@@ -1,71 +1,25 @@
-const fs = require("@lute/fs")
-const process = require("@lute/process")
+const fs = require("@lune/fs")
+const process = require("@lune/process")
 
-const PACKAGES_DIRECTORY_PATH = "./packages"
-const STAGING_DIRECTORY_NAME = ".staging"
+const function pathExists(path: string): boolean
+	const metadata = fs.metadata(path)
+	return metadata.exists
+end
 
-const function mustRun(command: { string } | string, noPrintStdout: boolean?): process.ProcessResult
-	const result = if type(command) == "string" then process.system(command) else process.run(command)
-	assert(result.ok, result.stderr)
-	if not result.stdout:match("^%s*$") and not noPrintStdout then
-		print(result.stdout:match("^%s*(.-)%s*$"))
+type RunOptions = process.ExecOptions & {
+	mustRun: boolean?,
+}
+
+const function run(program: string, params: { string }?, options: RunOptions?): process.ExecResult
+	const options: RunOptions = options or {}
+	const result = process.exec(program, params, options)
+	if not result.ok and options.mustRun then
+		error(`{program} {table.concat(params or {}, " ")} failed ({result.code})\n{result.stdout}\n{result.stderr}`)
 	end
 	return result
 end
 
-const function generateUuid(): string?
-	return (mustRun("uuidgen", true).stdout:match("^%s*(.-)%s*$") or ""):lower()
-end
-
-const function getCheckedPackageDirectoryPathFromName(name: string): string?
-	const path = `{PACKAGES_DIRECTORY_PATH}/{name}`
-
-	if not fs.exists(path) then
-		return nil
-	end
-
-	if fs.stat(path).type ~= "dir" then
-		return nil
-	end
-
-	return path
-end
-
--- creates a temporary copy for any transformations / staging for publishing
-const function stage(directoryPath: string, callback: (stagingFilePath: string) -> ()): (boolean, string)
-	assert(fs.exists(directoryPath), `expected {directoryPath} to exist`)
-	assert(fs.stat(directoryPath).type == "dir", `expected a directory`)
-
-	const stagingDirectoryPath = `{STAGING_DIRECTORY_NAME}/{generateUuid()}`
-
-	if not fs.exists(STAGING_DIRECTORY_NAME) then
-		fs.mkdir(STAGING_DIRECTORY_NAME)
-	end
-
-	mustRun({ "cp", "-r", directoryPath, stagingDirectoryPath })
-
-	const ok, errorString = pcall(callback, stagingDirectoryPath)
-
-	-- mustRun({ "rm", "-rf", stagingDirectoryPath })
-
-	return ok, errorString :: string
-end
-
-const function darkluaProcess(targetPath: string, darkluaConfigFilePath: string)
-	mustRun({
-		"darklua",
-		"process",
-		targetPath,
-		targetPath,
-		"-c",
-		darkluaConfigFilePath,
-	})
-end
-
 return {
-	PACKAGES_DIRECTORY_PATH = PACKAGES_DIRECTORY_PATH,
-	mustRun = mustRun,
-	getCheckedPackageDirectoryPathFromName = getCheckedPackageDirectoryPathFromName,
-	stage = stage,
-	darkluaProcess = darkluaProcess,
+	pathExists = pathExists,
+	run = run,
 }

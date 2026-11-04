@@ -1,14 +1,14 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function noneSchemaBuilder()
-	return core.schema.createSchema<<nil, nil, nil>>("none", function(value)
+	return engine.schema.createSchema<<nil, nil, nil>>("none", function(value)
 		if value ~= nil then
-			return core.parseResult.err({
-				core.parseIssue.create("invalid_type", `expected never, got {typeof(value)}`),
+			return engine.parseResult.err({
+				engine.parseIssue.create("invalid_type", `expected never, got {typeof(value)}`),
 			})
 		end
 
-		return core.parseResult.ok(value)
+		return engine.parseResult.ok(value)
 	end)
 end
 

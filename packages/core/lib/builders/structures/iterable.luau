@@ -1,16 +1,16 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function iterableSchemaBuilder<SK, SV>(keySchema: SK, valueSchema: SV)
-	return core.schema.createSchema<<{ [core.infer<SK>]: core.infer<SV>? }, {
-		key: core.InnerSchema<core.shape<SK>, core.metadata<SK>>,
-		value: core.InnerSchema<core.shape<SV>, core.metadata<SV>>,
+	return engine.schema.createSchema<<{ [engine.infer<SK>]: engine.infer<SV>? }, {
+		key: engine.InnerSchema<engine.shape<SK>, engine.metadata<SK>>,
+		value: engine.InnerSchema<engine.shape<SV>, engine.metadata<SV>>,
 	}, nil>>("iterable", function(value)
-		const keySchema: core.SchemaFromGeneric<SK> = keySchema
-		const valueSchema: core.SchemaFromGeneric<SV> = valueSchema
+		const keySchema: engine.SchemaFromGeneric<SK> = keySchema
+		const valueSchema: engine.SchemaFromGeneric<SV> = valueSchema
 
 		if type(value) ~= "table" then
-			return core.parseResult.err({
-				core.parseIssue.create("invalid_type", `expected table, got {typeof(value)}`),
+			return engine.parseResult.err({
+				engine.parseIssue.create("invalid_type", `expected table, got {typeof(value)}`),
 			})
 		end
 
@@ -26,25 +26,25 @@ const function iterableSchemaBuilder<SK, SV>(keySchema: SK, valueSchema: SV)
 
 			if not keyValidateResult.ok then
 				for _, validationIssue in keyValidateResult.issues do
-					table.insert(issues, core.parseIssue.appendContext(validationIssue, `at index {index}: key`))
+					table.insert(issues, engine.parseIssue.appendContext(validationIssue, `at index {index}: key`))
 				end
 			end
 
 			if not valueValidateResult.ok then
 				for _, validationIssue in valueValidateResult.issues do
-					table.insert(issues, core.parseIssue.appendContext(validationIssue, `at index {index}: value`))
+					table.insert(issues, engine.parseIssue.appendContext(validationIssue, `at index {index}: value`))
 				end
 			end
 		end
 
 		if #issues > 0 then
-			return core.parseResult.err(issues)
+			return engine.parseResult.err(issues)
 		end
 
-		return core.parseResult.ok(value)
+		return engine.parseResult.ok(value)
 	end, {
-		key = core.schema.innerSchema(keySchema),
-		value = core.schema.innerSchema(valueSchema),
+		key = engine.schema.innerSchema(keySchema),
+		value = engine.schema.innerSchema(valueSchema),
 	})
 end
 

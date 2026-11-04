@@ -1,4 +1,4 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function formatForOutput(value: any?): string
 	if value == nil then
@@ -21,17 +21,17 @@ const function literalsSchemaBuilder<T>(...: T)
 		acceptedLiterals[index] = formatForOutput(literal)
 	end
 
-	return core.schema.createSchema<<T, nil, nil>>("literals", function(value)
+	return engine.schema.createSchema<<T, nil, nil>>("literals", function(value)
 		for index = 1, literals.n do
 			local literal = literals[index]
 
 			if value == literal then
-				return core.parseResult.ok(value :: T)
+				return engine.parseResult.ok(value :: T)
 			end
 		end
 
-		return core.parseResult.err({
-			core.parseIssue.create(
+		return engine.parseResult.err({
+			engine.parseIssue.create(
 				"invalid_value",
 				`expected one of literal values ({table.concat(acceptedLiterals, ", ")}), got {formatForOutput(value)}`
 			),

@@ -1,14 +1,14 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
-type Schema<T, S, M> = core.Schema<T, S, M>
+type Schema<T, S, M> = engine.Schema<T, S, M>
 
-type InnerSchema<S, M> = core.InnerSchema<S, M>
+type InnerSchema<S, M> = engine.InnerSchema<S, M>
 
-type infer<T> = core.infer<T>
+type infer<T> = engine.infer<T>
 
-type metadata<T> = core.metadata<T>
+type metadata<T> = engine.metadata<T>
 
-type shape<T> = core.shape<T>
+type shape<T> = engine.shape<T>
 
 type function infer_from_fields(fieldsTy: type)
 	assert(fieldsTy:is("table"), "requires a table type")
@@ -70,7 +70,7 @@ type TableOptions = {
 const function tableSchemaBuilder<T>(fields: T, options: TableOptions?)
 	const options: TableOptions = options or {}
 
-	const fields = fields :: { [string]: core.UnknownSchema }
+	const fields = fields :: { [string]: engine.UnknownSchema }
 
 	for key, _ in fields do
 		assert(type(key) == "string", `expected string type key, got {key} ({typeof(key)})`)
@@ -79,13 +79,13 @@ const function tableSchemaBuilder<T>(fields: T, options: TableOptions?)
 	const shape = {}
 
 	for key, valueSchema in fields do
-		shape[key] = core.schema.innerSchema(valueSchema)
+		shape[key] = engine.schema.innerSchema(valueSchema)
 	end
 
-	return core.schema.createSchema<<infer_from_fields<T>, shape_from_fields<T>, nil>>("table", function(value)
+	return engine.schema.createSchema<<infer_from_fields<T>, shape_from_fields<T>, nil>>("table", function(value)
 		if type(value) ~= "table" then
-			return core.parseResult.err({
-				core.parseIssue.create("invalid_type", `expected table, got {typeof(value)}`),
+			return engine.parseResult.err({
+				engine.parseIssue.create("invalid_type", `expected table, got {typeof(value)}`),
 			})
 		end
 
@@ -97,14 +97,14 @@ const function tableSchemaBuilder<T>(fields: T, options: TableOptions?)
 
 			if not schemaParseResult.ok then
 				for _, issue in schemaParseResult.issues do
-					table.insert(issues, core.parseIssue.appendContext(issue, `index: {key}`))
+					table.insert(issues, engine.parseIssue.appendContext(issue, `index: {key}`))
 				end
 
 				continue
 			end
 
 			if parsedTable[key] then
-				table.insert(issues, core.parseIssue.create("key_conflict", `found key duplicate: {key}`))
+				table.insert(issues, engine.parseIssue.create("key_conflict", `found key duplicate: {key}`))
 
 				continue
 			end
@@ -117,8 +117,8 @@ const function tableSchemaBuilder<T>(fields: T, options: TableOptions?)
 				if not fields[key] then
 					table.insert(
 						issues,
-						core.parseIssue.appendContext(
-							core.parseIssue.create("extra_key", `extra key provided`),
+						engine.parseIssue.appendContext(
+							engine.parseIssue.create("extra_key", `extra key provided`),
 							`index: {key}`
 						)
 					)
@@ -131,10 +131,10 @@ const function tableSchemaBuilder<T>(fields: T, options: TableOptions?)
 		end
 
 		if #issues > 0 then
-			return core.parseResult.err(issues)
+			return engine.parseResult.err(issues)
 		end
 
-		return core.parseResult.ok(parsedTable :: infer_from_fields<T>)
+		return engine.parseResult.ok(parsedTable :: infer_from_fields<T>)
 	end, shape :: shape_from_fields<T>)
 end
 

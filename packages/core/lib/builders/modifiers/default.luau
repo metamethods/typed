@@ -1,8 +1,8 @@
 const optional = require("./optional")
 const transform = require("./transform")
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
-const function defaultSchemaBuilder<S>(sourceSchema: S, defaultValue: core.infer<S>)
+const function defaultSchemaBuilder<S>(sourceSchema: S, defaultValue: engine.infer<S>)
 	return transform(optional(sourceSchema))(function(value)
 		if value == nil then
 			return defaultValue

@@ -1,9 +1,9 @@
-const core = require("@packages/engine")
+const engine = require("@packages/engine")
 
 const function neverSchemaBuilder()
-	return core.schema.createSchema<<never, nil, nil>>("never", function(value)
-		return core.parseResult.err({
-			core.parseIssue.create("invalid_type", `expected never, got {typeof(value)}`),
+	return engine.schema.createSchema<<never, nil, nil>>("never", function(value)
+		return engine.parseResult.err({
+			engine.parseIssue.create("invalid_type", `expected never, got {typeof(value)}`),
 		})
 	end)
 end
