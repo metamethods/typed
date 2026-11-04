@@ -1,0 +1,9 @@
+const ROOT_DIR = "."
+const PACKAGES_DIR = `{ROOT_DIR}/packages`
+const STAGING_DIR = `{ROOT_DIR}/.staging`
+
+return {
+	ROOT_DIR = ROOT_DIR,
+	PACKAGES_DIR = PACKAGES_DIR,
+	STAGING_DIR = STAGING_DIR,
+}
