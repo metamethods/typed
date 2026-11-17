@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 const function noneSchemaBuilder()
 	return engine.schema.createSchema<<nil, nil, nil>>("none", function(value)

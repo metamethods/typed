@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 const like = require("./like")
 
 const function builtinSchemaBuilder<T>(typeName: string): () -> engine.Schema<T>

@@ -19,24 +19,28 @@ export type Package = {
 	config: PackageConfig,
 }
 
+const function getPackage(dir: string, entry: string): Package
+	const packagePath = `{dir}/{entry}`
+
+	const packageConfigPath = `{packagePath}/ember.toml`
+	const packageConfig: PackageConfig = serde.decode("toml", fs.readFile(packageConfigPath))
+
+	const packageName = packageConfig.package.name:split("/")[2]
+
+	assert(packageName)
+
+	return {
+		name = packageName,
+		path = packagePath,
+		config = packageConfig,
+	}
+end
+
 const function getPackages(dir: string): { Package }
 	const packages = {}
 
 	for _, entry in fs.readDir(dir) do
-		const packagePath = `{dir}/{entry}`
-
-		const packageConfigPath = `{packagePath}/ember.toml`
-		const packageConfig: PackageConfig = serde.decode("toml", fs.readFile(packageConfigPath))
-
-		const packageName = packageConfig.package.name:split("/")[2]
-
-		assert(packageName)
-
-		table.insert(packages, {
-			name = packageName,
-			path = packagePath,
-			config = packageConfig,
-		})
+		table.insert(packages, getPackage(dir, entry))
 	end
 
 	return packages
@@ -83,6 +87,7 @@ const darkluaTransformStep: steps.Step<StagedPackage> = function(package: Staged
 end
 
 return {
+	getPackage = getPackage,
 	getPackages = getPackages,
 	stagePackages = stagePackages,
 	darkluaTransformStep = darkluaTransformStep,

@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 const function likeSchemaBuilder<T>(typeName: string)
 	return engine.schema.createSchema<<T, nil, nil>>("is", function(value)

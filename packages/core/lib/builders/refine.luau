@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 type RefineResult<T> = {
 	ok: () -> engine.ParseResultOk<T>,

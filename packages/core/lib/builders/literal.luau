@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 const function literalSchemaBuilder<T>(literal: T)
 	return engine.schema.createSchema<<T, nil, nil>>("literal", function(value)

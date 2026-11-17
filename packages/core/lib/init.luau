@@ -1,5 +1,5 @@
 local primitiveSchemaBuilders = require("@builders/primitives")
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 local typed = {}
 

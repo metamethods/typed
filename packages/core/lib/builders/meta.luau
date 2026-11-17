@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 const function metaSchemaBuilder<S, NewM>(sourceSchema: S, metadata: NewM): engine.Schema<engine.infer<S>, engine.shape<S>, NewM>
 	const sourceSchema: engine.SchemaFromGeneric<S> = sourceSchema

@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 const function iterableSchemaBuilder<SK, SV>(keySchema: SK, valueSchema: SV)
 	return engine.schema.createSchema<<{ [engine.infer<SK>]: engine.infer<SV>? }, {

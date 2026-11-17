@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 type Schema<T, S, M> = engine.Schema<T, S, M>
 

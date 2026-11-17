@@ -1,4 +1,4 @@
-const engine = require("@packages/engine")
+const engine = require("@packages/luau/engine")
 
 const function transformSchemaBuilder<S>(sourceSchema: S)
 	const sourceSchema: engine.SchemaFromGeneric<S> = sourceSchema
