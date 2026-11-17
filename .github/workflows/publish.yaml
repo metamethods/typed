@@ -21,6 +21,6 @@ jobs:
           chmod +x embr
           mkdir "$HOME/bin"
           cp embr "$HOME/bin/"
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
       - run: embr install
       - run: lute scripts/publish.luau
