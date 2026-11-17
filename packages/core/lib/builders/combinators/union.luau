@@ -1,42 +1,64 @@
 const engine = require("@packages/engine")
 
-const function joinArrays<T>(...: { T }): { T }
-	const result = {}
+type infer<T> = engine.infer<T>
 
-	for _, array in { ... } do
-		for _, value in array do
-			table.insert(result, value)
-		end
+type shape<T> = engine.shape<T>
+
+type metadata<T> = engine.metadata<T>
+
+type InnerSchema<S, M> = engine.InnerSchema<S, M>
+
+type function get_inferred(ty: type): type
+	const inferredTypes = {}
+
+	for _, type in ty:components() do
+		table.insert(inferredTypes, infer(type) :: type)
 	end
 
-	return result
+	return types.unionof(table.unpack(inferredTypes))
 end
 
-const function unionSchema<SA, SB>(sourceSchemaA: SA, sourceSchemaB: SB)
-	return engine.schema.createSchema<<engine.infer<SA> | engine.infer<SB>, {
-		left: engine.InnerSchema<engine.shape<SA>, engine.metadata<SA>>,
-		right: engine.InnerSchema<engine.shape<SB>, engine.metadata<SB>>,
-	}, nil>>("union", function(value)
-		const sourceSchemaA: engine.SchemaFromGeneric<SA> = sourceSchemaA
-		const sourceSchemaB: engine.SchemaFromGeneric<SB> = sourceSchemaB
+type function get_shape(ty: type): type
+	const innerSchemaTys = {}
 
-		const result0 = sourceSchemaA.parse(value)
+	for index, type in ty:components() do
+		table.insert(innerSchemaTys, InnerSchema(shape(type), metadata(type)) :: type)
+	end
 
-		if result0.ok then
-			return result0
-		end
+	const union = types.unionof(table.unpack(innerSchemaTys))
 
-		const result1 = sourceSchemaB.parse(value)
-
-		if result1.ok then
-			return result1
-		end
-
-		return engine.parseResult.err(joinArrays(result0.issues, result1.issues))
-	end, {
-		left = engine.schema.innerSchema(sourceSchemaA),
-		right = engine.schema.innerSchema(sourceSchemaB),
+	return types.newtable(nil, {
+		index = types.number,
+		readresult = union,
+		writeresult = union,
 	})
+end
+
+const function unionSchema<T>(...: T)
+	const schemas: { engine.AnySchema } = { ... }
+	const innerSchemas = {}
+
+	for _, schema in schemas do
+		table.insert(innerSchemas, engine.schema.innerSchema(schema))
+	end
+
+	return engine.schema.createSchema<<get_inferred<T>, get_shape<T>, nil>>("union", function(value)
+		const issues = {}
+
+		for _, schema in schemas do
+			const result = schema.parse(value)
+
+			if result.ok then
+				return result
+			end
+
+			for _, issue in result.issues do
+				table.insert(issues, issue)
+			end
+		end
+
+		return engine.parseResult.err(issues)
+	end, innerSchemas :: get_shape<T>)
 end
 
 return unionSchema
