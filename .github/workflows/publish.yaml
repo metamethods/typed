@@ -23,4 +23,4 @@ jobs:
           cp embr "$HOME/bin/"
           echo "$HOME/bin" >> "$GITHUB_PATH"
       - run: embr install
-      - run: lute scripts/publish.luau
+      - run: lune run scripts/publish.luau

@@ -20,10 +20,11 @@ jobs:
         run: |
           curl -fsSL -o embr https://github.com/ember-luau/ember/releases/latest/download/embr-linux-x86_64
           chmod +x embr
-          cp embr "$HOME/.local/bin/"
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          mkdir "$HOME/bin"
+          cp embr "$HOME/bin/"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
       - run: embr install
-      - run: lute scripts/build.luau "${GITHUB_REF_NAME%@*}"
+      - run: lune run scripts/build.luau "${GITHUB_REF_NAME%@*}"
       - uses: softprops/action-gh-release@v3
         with:
           name: ${{ github.ref_name }}
