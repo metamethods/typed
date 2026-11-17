@@ -16,13 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: CompeyDev/setup-rokit@v0.2.1
-      - uses: lumin-org/setup-pesde@v0.4.1
-      - run: pesde install
+      - name: Install embr
+        run: |
+          curl -fsSL -o embr https://github.com/ember-luau/ember/releases/latest/download/embr-linux-x86_64
+          chmod +x embr
+          cp embr "$HOME/.local/bin/"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - run: embr install
       - run: lute scripts/build.luau "${GITHUB_REF_NAME%@*}"
       - uses: softprops/action-gh-release@v3
         with:
           name: ${{ github.ref_name }}
           generate_release_notes: true
           draft: true
-          files: "*.rbxm"
+          files: ".rbxms/*.rbxm"
           fail_on_unmatched_files: true
