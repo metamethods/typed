@@ -1,6 +1,6 @@
 [package]
 name = "typed/core"
-version = "0.9.2"
+version = "0.10.0"
 description = "luau runtime type validation library"
 authors = ["metamethods"]
 repository = "https://github.com/metamethods/typed"
