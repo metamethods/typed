@@ -13,7 +13,7 @@ t.any()
 t.unknown()
 t.never()
 t.literal<<"typed">>("typed")
-t.literals<<"typed" | "is" | "cool">>("typed", "is", "cool")
+t.enum("typed", "is", "cool")
 t.is<<string>>("string")
 t.refine(t.string())(function() ... end)
 t.meta(t.string(), "hello world")
@@ -81,7 +81,7 @@ t.never().parse("terrible") -- fail, invalid_type issue
 Do note that `t.never()` will never have a value that will pass validation; it will always return an `invalid_type` issue
 :::
 
-## Literal and Literals
+## Literal and Enums
 
 `t.literal()` checks a value against a single exact value, using `==`.
 
@@ -92,19 +92,15 @@ schema.parse("typed") -- pass
 schema.parse("yped") -- fail (value does not equal "typed")
 ```
 
-If you want to check against multiple literals, you can use `t.literals()` instead.
+If you want to check against multiple string literals, you can use `t.enum()` instead.
 
 ```luau
-local schema = t.literals<<"typed" | "is" | "cool">>("typed", "is", "cool")
+local schema = t.enum("typed", "is", "cool")
 
 schema.parse("typed") -- pass
 schema.parse("is") -- pass
-schema.parse("terrible") -- fail (does not exist in the defined literals above)
+schema.parse("terrible") -- fail (does not exist in the defined enum above)
 ```
-
-::: note
-Due to type widening, without using generic instantiation, it will infer the schema to be a `string` instead of your more narrow type of `"typed" | "is" | "cool"`. There isn't a way--at the moment--to disable this widening property, so you will need to manually use generic instantation in order to get more narrow types upon parsing the schema. If you don't really care about it being widen to a `string` type, then, uhh.. ignore this lol
-:::
 
 ## Is
 
@@ -317,7 +313,7 @@ defaultedSchema.parse("yuh uh") -- returns "yuh uh"
 
 ## Union
 
-`t.union(schemaA, schemaB)` passes if the value satisfies _either_ schema.
+`t.union(...)` passes if the value satisfies any schema.
 
 ```luau
 local schema = t.union(t.string(), t.number())
@@ -329,7 +325,7 @@ schema.parse(true) -- fail
 
 ## Intersect
 
-`t.intersect(schemaA, schemaB)` passes if the value satisfies _both_ schemas, and merges the parsed results together. It's built for combining `t.table` schemas.
+`t.intersect(...)` passes if the value satisfies all schemas, and merges the parsed results together. It's built for combining `t.table` schemas **only**.
 
 ```luau
 local named = t.table({ a = t.string() })
