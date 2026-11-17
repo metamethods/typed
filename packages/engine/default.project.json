@@ -1,5 +1,5 @@
 {
-  "name": "typed_core",
+  "name": "engine",
   "tree": {
     "$path": "lib"
   }
