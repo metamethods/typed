@@ -1,4 +1,5 @@
 /.staging
+/.rbxms
 luau_packages
 lune_packages
 .pesde

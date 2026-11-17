@@ -53,8 +53,9 @@ const function stagePackages(stagingDir: string, packages: { Package }): { Stage
 
 	if lib.pathExists(stagingDir) then
 		fs.removeDir(stagingDir)
-		fs.writeDir(stagingDir)
 	end
+
+	fs.writeDir(stagingDir)
 
 	for _, package in packages do
 		const stagedPackagePath = `{stagingDir}/{package.name}`
